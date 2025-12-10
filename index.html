@@ -24,7 +24,7 @@
       height: 1920px;
       aspect-ratio: 9 / 16;
       overflow: hidden;
-      padding: 60px;
+      padding: 90px 120px;
       box-sizing: border-box;
       transform: scale(1);
       background: #fafafa;
@@ -32,6 +32,38 @@
       margin: 0 auto;
       border-radius: 40px;
       box-shadow: none;
+      font-size: 1.08rem;
+      line-height: 1.85;
+    }
+
+    .screenshot-mode #resultArea .res-title {
+      font-size: 2.4rem;
+    }
+
+    .screenshot-mode #resultArea .res-emoji {
+      font-size: 4rem;
+    }
+
+    .screenshot-mode #resultArea .res-tag {
+      font-size: 0.95rem;
+    }
+
+    .screenshot-mode #resultArea .res-rarity {
+      font-size: 1.15rem;
+      padding: 8px 26px;
+    }
+
+    .screenshot-mode #resultArea .res-quote,
+    .screenshot-mode #resultArea .trait-list,
+    .screenshot-mode #resultArea .blessing-text {
+      font-size: 1.05rem;
+    }
+
+    .screenshot-mode #resultArea .trait-title,
+    .screenshot-mode #resultArea .tips-title,
+    .screenshot-mode #resultArea .blessing-title {
+      font-size: 0.9rem;
+      letter-spacing: 0.18em;
     }
 
     /* 僅供娛樂參考 */
@@ -588,7 +620,7 @@
     .res-rarity-s {
       border-color: #f472b6;
       background: linear-gradient(135deg, #fb7185, #f9a8d4, #fee2f2);
-      color: #831843;
+      color: #3b0764;
     }
 
     .res-rarity-r {
@@ -885,7 +917,7 @@
         如果把日常生活當成魔法修行，你可能比較擅長哪一系？<br>
         12 種異世界魔法學派，選直覺就好。
       </p>
-      <button class="btn-action" id="startBtn" type="button">
+      <button class="btn-action" id="startBtn" type="button" onclick="startQuizFromButton()">
         開始小測驗 <span>✨</span>
       </button>
       <div class="hero-subhint">
@@ -1049,7 +1081,7 @@
         <!-- Q6 -->
         <div class="question-card" data-q="6">
           <div class="q-number">Question 06</div>
-          <h3 class="q-text">如果把你現在的日常生活當成一個大型遊戲，你最想升級哪一種能力？</h3>
+          <h3 class="q-text">如果把「日常生活」當成一個大型遊戲，你最想升級哪一種能力？</h3>
           <div class="options-grid">
             <label class="option-item">
               <input type="radio" name="q6" value="aurora">
@@ -1061,7 +1093,7 @@
             </label>
             <label class="option-item">
               <input type="radio" name="q6" value="nexus">
-              <div class="option-content">更自在地跟不同人聊起來，讓自己不會被氣氛吃掉。</div>
+              <div class="option-content">更自在地跟不同人聊起來，讓自己不會被場面氣氛吃掉。</div>
             </label>
             <label class="option-item">
               <input type="radio" name="q6" value="cipher">
@@ -1105,7 +1137,7 @@
         <!-- Q8 -->
         <div class="question-card" data-q="8">
           <div class="q-number">Question 08</div>
-          <h3 class="q-text">如果未來有機會參加一個「現實世界 × 異世界」聯名企劃，你最想負責哪個角色？</h3>
+          <h3 class="q-text">如果有機會參加一個「現實世界 x 異世界」聯名企劃，你最想負責哪個角色？</h3>
           <div class="options-grid">
             <label class="option-item">
               <input type="radio" name="q8" value="aurora">
@@ -1209,7 +1241,7 @@
             </label>
             <label class="option-item">
               <input type="radio" name="q11" value="solace">
-              <div class="option-content">心域治癒實習：學習陪伴、傾聽與自我照顧，成為班上的穩定力量。</div>
+              <div class="option-content">心域治癒實習：學習陪伴、傾聽與自我照顧，成為身邊的穩定力量。</div>
             </label>
           </div>
         </div>
@@ -1257,7 +1289,7 @@
     </div>
 
     <footer class="page-footer" id="mainFooter" style="display:none;">
-      這個小測驗只是幫你用「異世界魔法」的方式，偷看自己的日常天賦，<br>
+      這個小測驗只是用「異世界魔法」的方式，偷看自己的日常天賦，<br>
       不會被當作正式測驗或評量。真正重要的，是你怎麼使用這些魔法陪自己長大。
     </footer>
   </div>
@@ -1265,451 +1297,455 @@
   <div class="toast" id="toast">請先選一個啦，別想偷懶！👻</div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      /* 12 種異世界魔法學派設定 + 稀有度（N → R → S → SR → SSR） */
+    /* 12 種異世界魔法學派設定（稀有度：N / R / S / SR / SSR 都只顯示英文字母） */
 
-      const resultsData = {
-        aurora: {
-          emoji: "🎨",
-          name: "幻光工房系魔法使",
-          tag: "視覺 · 故事 · 品牌感",
-          rarity: "R",
-          rarityClass: "res-rarity-r",
-          blessing: "你的眼睛自帶調色盤。願你在每一次作業、報告或小作品裡，都偷偷多放一點屬於自己的顏色，而不是被制式模板關住。",
-          quote: "你總是忍不住想把普通的畫面，調成有自己味道的光。",
-          traits: [
-            "看到不好看的版面會很痛苦，會下意識想把它調整得更順眼。",
-            "拍照、錄影或做簡報時，會在意整體的顏色與構圖。",
-            "對於角色、世界觀或品牌故事很有感，會在腦中自己延伸劇情。"
-          ],
-          mate: { shape: "記錄方陣系魔法使", emoji: "📊" },
-          clash: { shape: "靜默深潛系魔法使", emoji: "🌊" },
-          tips: "你的視覺魔法在<b>多媒體設計科</b>會被放大：從影像剪輯、動畫分鏡到品牌設計，都是你的實戰場；搭配<b>商業經營科</b>，未來在行銷與品牌企劃上也會很有優勢。"
-        },
-        ledger: {
-          emoji: "📊",
-          name: "記錄方陣系魔法使",
-          tag: "秩序 · 結構 · 穩定感",
-          rarity: "N",
-          rarityClass: "res-rarity-n",
-          blessing: "你看起來不浮誇，卻是很多事情能走到終點的關鍵。請記得，穩定不是無聊，而是讓所有人可以放心往前走的底盤。",
-          quote: "你不一定愛出風頭，但你會讓混亂的事情逐漸變得有條理。",
-          traits: [
-            "會習慣把事情記在紙本、記事本或行事曆，而不是全靠記憶。",
-            "面對要繳交的作業或報告，會先確認時間與格式，再開始動手。",
-            "比起「隨興」，你更喜歡掌握進度的感覺。"
-          ],
-          mate: { shape: "心域治癒系魔法使", emoji: "🫧" },
-          clash: { shape: "邊境探索系魔法使", emoji: "🧭" },
-          tips: "<b>會計事務科</b>、<b>資料處理科</b>和<b>商業經營科</b>都非常需要你的秩序魔法：記帳、報表、系統流程，都是把混亂變清楚的過程；在任何團隊裡，你也會是大家很放心依賴的「穩定核心」。"
-        },
-        cipher: {
-          emoji: "🧮",
-          name: "演算解析系魔法使",
-          tag: "邏輯 · 系統 · 拆解力",
-          rarity: "R",
-          rarityClass: "res-rarity-r",
-          blessing: "你的腦袋很適合當「解題主力」，但也別忘了留一點空間給好玩與胡思亂想。理性不是用來否定感性，而是幫你把人生選項看得更清楚。",
-          quote: "你習慣先搞懂規則，再決定要不要打破它。",
-          traits: [
-            "遇到新系統或新工具時，會想知道它「到底怎麼運作」。",
-            "別人覺得很複雜的東西，你會試著拆成幾個步驟理解。",
-            "對數字、規則或邏輯感到有趣，雖然不一定每次都喜歡考試。"
-          ],
-          mate: { shape: "靜默深潛系魔法使", emoji: "🌊" },
-          clash: { shape: "即興火花系魔法使", emoji: "🎭" },
-          tips: "在<b>資料處理科 / AI 實驗班</b>、<b>會計事務科</b>或<b>商業經營科</b>，你的演算魔法會讓你在系統操作、資料分析與決策上特別有優勢；未來若想碰 AI、程式或數據相關工作，也是很重要的底子。"
-        },
-        scribe: {
-          emoji: "📜",
-          name: "敘事編纂系魔法使",
-          tag: "文字 · 觀點 · 世界觀",
-          rarity: "R",
-          rarityClass: "res-rarity-r",
-          blessing: "你對故事很敏感，也很擅長幫世界取名字。未來無論走到哪個領域，請保留這個看見細節與意義的眼睛，它會讓你成為一個溫柔又犀利的觀察者。",
-          quote: "你在意的，從來不只是資訊，而是背後的故事與意義。",
-          traits: [
-            "會想像別人背後的故事，而不只看表面行為。",
-            "對文章、影劇或遊戲裡的世界觀設定特別有感。",
-            "有時候會在腦中默默幫現實生活下旁白或取標題。"
-          ],
-          mate: { shape: "幻光工房系魔法使", emoji: "🎨" },
-          clash: { shape: "演算解析系魔法使", emoji: "🧮" },
-          tips: "你的敘事魔法在<b>商業經營科</b>（行銷文案、品牌故事）、<b>應用英語科</b>和<b>應用日語科</b>（跨文化溝通、導覽解說）都會派上用場；未來若接觸自媒體經營、企劃提案或內容產業，也會是你的舞台。"
-        },
-        nexus: {
-          emoji: "🌐",
-          name: "星環連結系魔法使",
-          tag: "社群 · 串聯 · 網路感",
-          rarity: "N",
-          rarityClass: "res-rarity-n",
-          blessing: "你是很多關係之間的「橋」。請記得照顧自己，不用每一個場合都當潤滑劑；當你學會設界線，你的連結魔法會變得更穩、更持久。",
-          quote: "你很擅長找到誰跟誰可以連在一起，然後讓事情發生。",
-          traits: [
-            "對社群氛圍敏感，會注意誰被忽略、誰很活躍。",
-            "喜歡幫不同圈子的人互相介紹，看到連結被建立會很開心。",
-            "發文或經營帳號時，會在意整體風格跟互動感。"
-          ],
-          mate: { shape: "即興火花系魔法使", emoji: "🎭" },
-          clash: { shape: "靜默深潛系魔法使", emoji: "🌊" },
-          tips: "在<b>商業經營科</b>、<b>國際貿易科</b>與<b>應用語文科</b>（英／日）裡，你的連結魔法特別重要：不論是客戶關係、社群經營或跨國溝通，「把人連在一起」都是關鍵能力；未來也很適合活動企劃與社群營運相關工作。"
-        },
-        carnival: {
-          emoji: "🎭",
-          name: "即興火花系魔法使",
-          tag: "現場 · 節奏 · 氣氛值",
-          rarity: "R",
-          rarityClass: "res-rarity-r",
-          blessing: "你很會讓場面活起來，但也不必每一場都靠你扛。學會在需要時站出來、不需要時退後休息，你的火花就能一直保持好玩，而不是變成壓力。",
-          quote: "你對「場子」的變化特別敏感，知道什麼時候該帶一點火花進來。",
-          traits: [
-            "在需要活絡氣氛的場合，你常常會不自覺地出手救場。",
-            "喜歡現場互動勝過單向輸出，覺得人跟人的交流很重要。",
-            "面對突發狀況，比起恐慌，你更傾向邊做邊調整。"
-          ],
-          mate: { shape: "星環連結系魔法使", emoji: "🌐" },
-          clash: { shape: "記錄方陣系魔法使", emoji: "📊" },
-          tips: "你的火花魔法在<b>商業經營科</b>、<b>國際貿易科</b>與<b>多媒體設計科</b>都非常實用：不論是門市體驗、活動企劃或展演主持，都是你的主場；如果搭配語文能力，未來也很適合走導覽、領隊或服務產業的前線角色。"
-        },
-        solace: {
-          emoji: "🫧",
-          name: "心域治癒系魔法使",
-          tag: "情緒 · 安心 · 支援力",
-          rarity: "SR",
-          rarityClass: "res-rarity-sr",
-          blessing: "你很懂得別人的不安，所以也更值得被好好對待。請記得：照顧別人之前，也要先為自己補血。你的存在本身，就是很多人活下去的重要證明。",
-          quote: "你不一定會說大道理，但跟你在一起，很多人會覺得比較安心。",
-          traits: [
-            "別人心情不好時，你會下意識放慢語氣或陪在旁邊。",
-            "比起爭輸贏，你更在意彼此相處時的感受是不是 OK。",
-            "有時候自己會累積很多情緒，但也因此更懂得他人的壓力。"
-          ],
-          mate: { shape: "靜默深潛系魔法使", emoji: "🌊" },
-          clash: { shape: "即興火花系魔法使", emoji: "🎭" },
-          tips: "你的治癒魔法，在<b>商業經營科</b>、<b>國際貿易科</b>的服務情境裡非常重要，能讓客人和同事都比較放心；搭配<b>應用英語科</b>或<b>應用日語科</b>，未來也很適合走接待、觀光或跨文化溝通相關的路。"
-        },
-        horizon: {
-          emoji: "🧭",
-          name: "邊境探索系魔法使",
-          tag: "好奇 · 變動 · 開視野",
-          rarity: "SSR",
-          rarityClass: "res-rarity-ssr",
-          blessing: "你身上有一種「不急著被定義」的力量。世界很大，你願意多看幾眼，就是很珍貴的天賦。只要把基礎打好，再慢慢往外走，你的人生故事會很精彩。",
-          quote: "你不急著把自己關進一個小盒子，因為世界還很大。",
-          traits: [
-            "對別的城市、學校或國家的生活總是有點好奇。",
-            "很怕被鎖死在「只有一種可能」的人生裡。",
-            "會存一些資訊起來，但不會急著下定論。"
-          ],
-          mate: { shape: "幻光工房系魔法使", emoji: "🎨" },
-          clash: { shape: "記錄方陣系魔法使", emoji: "📊" },
-          tips: "你的探索魔法在<b>國際貿易科</b>、<b>應用英語科</b>與<b>應用日語科</b>會被放大，它們都跟不同的國家、文化與市場有關；在花商，你可以先把眼前的技能練好，再慢慢把邊界拉遠。"
-        },
-        atelier: {
-          emoji: "🏟",
-          name: "場域塑形系魔法使",
-          tag: "體驗 · 氛圍 · 儀式感",
-          rarity: "SR",
-          rarityClass: "res-rarity-sr",
-          blessing: "你有把普通空間變成「有記憶的場景」的能力。願你在忙碌的現實裡，也為自己保留一些小儀式和小角落，讓生活不只是生存，而是被好好佈置過的故事。",
-          quote: "你在意的不只是事情有沒有做完，而是「做的過程」長什麼樣子。",
-          traits: [
-            "喜歡為重要的日子設計一點小儀式，例如佈置、拍照或小聚會。",
-            "對空間配置、動線與氣氛特別敏感，走進一個地方會立刻有感覺。",
-            "會想像「如果把這裡弄成……」之後，大家的反應會是什麼。"
-          ],
-          mate: { shape: "星環連結系魔法使", emoji: "🌐" },
-          clash: { shape: "演算解析系魔法使", emoji: "🧮" },
-          tips: "你的場域魔法在<b>多媒體設計科</b>（展場設計、互動體驗）、<b>商業經營科</b>（門市氛圍、品牌體驗）都會非常搶手；如果結合活動企劃與社群營運，你會成為很會「辦場子」的人。"
-        },
-        oracle: {
-          emoji: "🔮",
-          name: "未來預讀系魔法使",
-          tag: "趨勢 · 風向 · 長線感",
-          rarity: "S",
-          rarityClass: "res-rarity-s",
-          blessing: "你很習慣往後想一兩步，這是很稀有的能力。也請允許自己偶爾只活在今天一下下，因為很多靈感，都是在放鬆的時候悄悄長出來的。",
-          quote: "你會不自覺地想：「如果照這樣走下去，之後會變成什麼樣子？」",
-          traits: [
-            "遇到選擇時，不只看眼前，而是會往後想一兩步。",
-            "對新聞、社會事件或產業變化有興趣，會想知道背後原因。",
-            "看到別人的經驗談時，會拿來默默對照自己的可能路線。"
-          ],
-          mate: { shape: "記錄方陣系魔法使", emoji: "📊" },
-          clash: { shape: "即興火花系魔法使", emoji: "🎭" },
-          tips: "你的預讀魔法在<b>商業經營科</b>與<b>國際貿易科</b>會是一大優勢：不論是市場趨勢、產業脈動或職涯路線，都需要有人幫忙看長遠一點；搭配資料與語文能力，未來也適合走企劃與策略相關工作。"
-        },
-        anchor: {
-          emoji: "⚓",
-          name: "基底支援系魔法使",
-          tag: "後勤 · 穩定 · 承接力",
-          rarity: "N",
-          rarityClass: "res-rarity-n",
-          blessing: "你不是背景板，而是很多人能安心冒險的「安全繩」。也許不會有人每天稱讚你，但每當事情沒散掉，其實都有你的一份功勞。",
-          quote: "你不一定站在舞台中央，但沒有你，很多事會悄悄運轉不起來。",
-          traits: [
-            "會主動注意誰的進度落後、誰需要提醒或協助。",
-            "比起當主角，你更在意整個團隊有沒有順利完成任務。",
-            "別人常常一句「拜託你一下」，你就默默幫忙收好爛攤子。"
-          ],
-          mate: { shape: "記錄方陣系魔法使", emoji: "📊" },
-          clash: { shape: "即興火花系魔法使", emoji: "🎭" },
-          tips: "你的支援魔法在<b>會計事務科</b>與<b>資料處理科</b>非常實用，讓系統、帳務與資料不會亂掉；在<b>商業經營科</b>裡，你也會是專案和行政流程背後非常重要的核心。"
-        },
-        abyss: {
-          emoji: "🌊",
-          name: "靜默深潛系魔法使",
-          tag: "安靜 · 深度 · 慢熟",
-          rarity: "SSR",
-          rarityClass: "res-rarity-ssr",
-          blessing: "你不一定會搶著講話，但你會慢慢往深處鑽。世界很吵，但深度很稀有。願你在自己的節奏裡，一點一滴堆出屬於你的長線成就。",
-          quote: "你可能話不多，但一旦想做，就會慢慢往深處潛下去。",
-          traits: [
-            "不太喜歡被催促，比起表現得很厲害，更想穩穩來。",
-            "對有興趣的東西可以一直重複做，不太怕覺得無聊。",
-            "有些計畫你放在心裡想，還沒準備好時不太會講出來。"
-          ],
-          mate: { shape: "演算解析系魔法使", emoji: "🧮" },
-          clash: { shape: "星環連結系魔法使", emoji: "🌐" },
-          tips: "你的深潛魔法很適合需要長期打磨的領域，例如<b>會計事務科</b>、<b>資料處理科／AI 實驗班</b>；在花商，你可以慢慢累積，一點一滴疊出自己的專業，不用跟別人的時間表完全一樣。"
+    const resultsData = {
+      aurora: {
+        emoji: "🎨",
+        name: "幻光工房系魔法使",
+        tag: "視覺 · 故事 · 品牌感",
+        rarity: "R",
+        rarityClass: "res-rarity-r",
+        blessing: "你對「好看」這件事的敏感，會讓很多普通的東西被你重新打磨出質感。只要記得也照顧好自己的節奏，不用每一張作品都拼命完美，就能把這份魔法用得更久。",
+        quote: "你總是忍不住想把普通的畫面，調成有自己味道的光。",
+        traits: [
+          "看到不好看的版面會很痛苦，會下意識想把它調整得更順眼。",
+          "拍照、錄影或做簡報時，會在意整體的顏色與構圖。",
+          "對於角色、世界觀或品牌故事很有感，會在腦中自己延伸劇情。"
+        ],
+        mate: { shape: "記錄方陣系魔法使", emoji: "📊" },
+        clash: { shape: "靜默深潛系魔法使", emoji: "🌊" },
+        tips: "你的視覺魔法在<b>多媒體設計科</b>會被放大：從影像剪輯、動畫分鏡到品牌設計，都是你的實戰場；搭配<b>商業經營科</b>，未來在行銷與品牌企劃上也會很有優勢。"
+      },
+      ledger: {
+        emoji: "📊",
+        name: "記錄方陣系魔法使",
+        tag: "秩序 · 結構 · 穩定感",
+        rarity: "N",
+        rarityClass: "res-rarity-n",
+        blessing: "你也許不是最吵的那個人，卻經常是最可靠的那一個。請記得，把你替大家維持的秩序，也分一點給自己，讓自己的生活節奏也能被好好照顧。",
+        quote: "你不一定愛出風頭，但你會讓混亂的事情逐漸變得有條理。",
+        traits: [
+          "會習慣把事情記在紙本、記事本或行事曆，而不是全靠記憶。",
+          "面對要繳交的作業或報告，會先確認時間與格式，再開始動手。",
+          "比起「隨興」，你更喜歡掌握進度的感覺。"
+        ],
+        mate: { shape: "心域治癒系魔法使", emoji: "🫧" },
+        clash: { shape: "邊境探索系魔法使", emoji: "🧭" },
+        tips: "<b>會計事務科</b>、<b>資料處理科</b>和<b>商業經營科</b>都非常需要你的秩序魔法：記帳、報表、系統流程，都是把混亂變清楚的過程；在任何團隊裡，你也會是大家很放心依賴的「穩定核心」。"
+      },
+      cipher: {
+        emoji: "🧮",
+        name: "演算解析系魔法使",
+        tag: "邏輯 · 系統 · 拆解力",
+        rarity: "R",
+        rarityClass: "res-rarity-r",
+        blessing: "世界在快速變動，但你會用自己的方式一條條拆解。當你願意把這份冷靜加上一點耐心教人，會發現自己其實很有帶路人的天分。",
+        quote: "你習慣先搞懂規則，再決定要不要打破它。",
+        traits: [
+          "遇到新系統或新工具時，會想知道它「到底怎麼運作」。",
+          "別人覺得很複雜的東西，你會試著拆成幾個步驟理解。",
+          "對數字、規則或邏輯感到有趣，雖然不一定每次都喜歡考試。"
+        ],
+        mate: { shape: "靜默深潛系魔法使", emoji: "🌊" },
+        clash: { shape: "即興火花系魔法使", emoji: "🎭" },
+        tips: "在<b>資料處理科 / AI 實驗班</b>、<b>會計事務科</b>或<b>商業經營科</b>，你的演算魔法會讓你在系統操作、資料分析與決策上特別有優勢；未來若想碰 AI、程式或數據相關工作，也是很重要的底子。"
+      },
+      scribe: {
+        emoji: "📜",
+        name: "敘事編纂系魔法使",
+        tag: "文字 · 觀點 · 世界觀",
+        rarity: "R",
+        rarityClass: "res-rarity-r",
+        blessing: "你看到的從來不只是事件本身，而是它背後的脈絡。如果你願意把這些觀察寫下來、說出來，很可能會成為某些人理解世界的重要窗口。",
+        quote: "你在意的，從來不只是資訊，而是背後的故事與意義。",
+        traits: [
+          "會想像別人背後的故事，而不只看表面行為。",
+          "對文章、影劇或遊戲裡的世界觀設定特別有感。",
+          "有時候會在腦中默默幫現實生活下旁白或取標題。"
+        ],
+        mate: { shape: "幻光工房系魔法使", emoji: "🎨" },
+        clash: { shape: "演算解析系魔法使", emoji: "🧮" },
+        tips: "你的敘事魔法在<b>商業經營科</b>（行銷文案、品牌故事）、<b>應用英語科</b>和<b>應用日語科</b>（跨文化溝通、導覽解說）都會派上用場；未來若接觸自媒體經營、企劃提案或內容產業，也會是你的舞台。"
+      },
+      nexus: {
+        emoji: "🌐",
+        name: "星環連結系魔法使",
+        tag: "社群 · 串聯 · 網路感",
+        rarity: "N",
+        rarityClass: "res-rarity-n",
+        blessing: "你天生就比較知道「要找誰來一起做」這件事。只要學會適度保護自己的界線，不被所有訊息拖著走，你會成為很多計畫背後的重要樞紐。",
+        quote: "你很擅長找到誰跟誰可以連在一起，然後讓事情發生。",
+        traits: [
+          "對社群氛圍敏感，會注意誰被忽略、誰很活躍。",
+          "喜歡幫不同圈子的人互相介紹，看到連結被建立會很開心。",
+          "發文或經營帳號時，會在意整體風格跟互動感。"
+        ],
+        mate: { shape: "即興火花系魔法使", emoji: "🎭" },
+        clash: { shape: "靜默深潛系魔法使", emoji: "🌊" },
+        tips: "在<b>商業經營科</b>、<b>國際貿易科</b>與<b>應用語文科</b>（英 / 日）裡，你的連結魔法特別重要：不論是客戶關係、社群經營或跨國溝通，「把人連在一起」都是關鍵能力；未來也很適合活動企劃與社群營運相關工作。"
+      },
+      carnival: {
+        emoji: "🎭",
+        name: "即興火花系魔法使",
+        tag: "現場 · 節奏 · 氣氛值",
+        rarity: "S",
+        rarityClass: "res-rarity-s",
+        blessing: "你帶得起場子，也接得住突發狀況。只要記得偶爾讓自己退到觀眾席，好好休息一下，你就能在更多場合放心地發光。",
+        quote: "你對「場子」的變化特別敏感，知道什麼時候該帶一點火花進來。",
+        traits: [
+          "在需要活絡氣氛的場合，你常常會不自覺地出手救場。",
+          "喜歡現場互動勝過單向輸出，覺得人跟人的交流很重要。",
+          "面對突發狀況，比起恐慌，你更傾向邊做邊調整。"
+        ],
+        mate: { shape: "星環連結系魔法使", emoji: "🌐" },
+        clash: { shape: "記錄方陣系魔法使", emoji: "📊" },
+        tips: "你的火花魔法在<b>商業經營科</b>、<b>國際貿易科</b>與<b>多媒體設計科</b>都非常實用：不論是門市體驗、活動企劃或展演主持，都是你的主場；如果搭配語文能力，未來也很適合走導覽、領隊或服務產業的前線角色。"
+      },
+      solace: {
+        emoji: "🫧",
+        name: "心域治癒系魔法使",
+        tag: "情緒 · 安心 · 支援力",
+        rarity: "SR",
+        rarityClass: "res-rarity-sr",
+        blessing: "你對別人的情緒很敏感，這是禮物，但有時也會變成壓力。學會照顧好自己的界線與休息時間，你就能長期成為別人放心依靠的存在。",
+        quote: "你不一定會說大道理，但跟你在一起，很多人會覺得比較安心。",
+        traits: [
+          "別人心情不好時，你會下意識放慢語氣或陪在旁邊。",
+          "比起爭輸贏，你更在意彼此相處時的感受是不是OK。",
+          "有時候自己會累積很多情緒，但也因此更懂得他人的壓力。"
+        ],
+        mate: { shape: "靜默深潛系魔法使", emoji: "🌊" },
+        clash: { shape: "即興火花系魔法使", emoji: "🎭" },
+        tips: "你的治癒魔法，在<b>商業經營科</b>、<b>國際貿易科</b>的服務情境裡非常重要，能讓客人和同事都比較放心；搭配<b>應用英語科</b>或<b>應用日語科</b>，未來也很適合走接待、觀光或跨文化溝通相關的路。"
+      },
+      horizon: {
+        emoji: "🧭",
+        name: "邊境探索系魔法使",
+        tag: "好奇 · 變動 · 開視野",
+        rarity: "SSR",
+        rarityClass: "res-rarity-ssr",
+        blessing: "你身上有一種「不急著被定義」的特質，在很多同齡人已經放棄好奇心的時候，你還在看遠一點。如果能把這份探索感配上穩定的基本功，你會是一個很有故事的人。",
+        quote: "你不急著把自己關進一個小盒子，因為世界還很大。",
+        traits: [
+          "對別的城市、學校或國家的生活總是有點好奇。",
+          "很怕被鎖死在「只有一種可能」的人生裡。",
+          "會存一些資訊起來，但不會急著下定論。"
+        ],
+        mate: { shape: "幻光工房系魔法使", emoji: "🎨" },
+        clash: { shape: "記錄方陣系魔法使", emoji: "📊" },
+        tips: "你的探索魔法在<b>國際貿易科</b>、<b>應用英語科</b>與<b>應用日語科</b>會被放大，它們都跟不同的國家、文化與市場有關；在花商，你可以先把眼前的技能練好，再慢慢把邊界拉遠。"
+      },
+      atelier: {
+        emoji: "🏟",
+        name: "場域塑形系魔法使",
+        tag: "體驗 · 氛圍 · 儀式感",
+        rarity: "SR",
+        rarityClass: "res-rarity-sr",
+        blessing: "你擅長讓一個地方「有感覺」，這是很多服務與設計工作都在找的人。只要再多練一點專業工具，你的品味就能變成真正有價值的能力。",
+        quote: "你在意的不只是事情有沒有做完，而是「做的過程」長什麼樣子。",
+        traits: [
+          "喜歡為重要的日子設計一點小儀式，例如佈置、拍照或小聚會。",
+          "對空間配置、動線與氣氛特別敏感，走進一個地方會立刻有感覺。",
+          "會想像「如果把這裡弄成……」之後，大家的反應會是什麼。"
+        ],
+        mate: { shape: "星環連結系魔法使", emoji: "🌐" },
+        clash: { shape: "演算解析系魔法使", emoji: "🧮" },
+        tips: "你的場域魔法在<b>多媒體設計科</b>（展場設計、互動體驗）、<b>商業經營科</b>（門市氛圍、品牌體驗）都會非常搶手；如果結合活動企劃與社群營運，你會成為很會「辦場子」的人。"
+      },
+      oracle: {
+        emoji: "🔮",
+        name: "未來預讀系魔法使",
+        tag: "趨勢 · 風向 · 長線感",
+        rarity: "S",
+        rarityClass: "res-rarity-s",
+        blessing: "你會不自覺地往前想幾步，這讓你在做選擇時比別人更冷靜。當你肯定自己的判斷力，同時也保持彈性，你將有機會成為幫大家看路的人。",
+        quote: "你會不自覺地想：「如果照這樣走下去，之後會變成什麼樣子？」",
+        traits: [
+          "遇到選擇時，不只看眼前，而是會往後想一兩步。",
+          "對新聞、社會事件或產業變化有興趣，會想知道背後原因。",
+          "看到別人的經驗談時，會拿來默默對照自己的可能路線。"
+        ],
+        mate: { shape: "記錄方陣系魔法使", emoji: "📊" },
+        clash: { shape: "即興火花系魔法使", emoji: "🎭" },
+        tips: "你的預讀魔法在<b>商業經營科</b>與<b>國際貿易科</b>會是一大優勢：不論是市場趨勢、產業脈動或職涯路線，都需要有人幫忙看長遠一點；搭配資料與語文能力，未來也適合走企劃與策略相關工作。"
+      },
+      anchor: {
+        emoji: "⚓",
+        name: "基底支援系魔法使",
+        tag: "後勤 · 穩定 · 承接力",
+        rarity: "N",
+        rarityClass: "res-rarity-n",
+        blessing: "你不是背景板，而是很多人能安心冒險的「安全繩」。也許不會有人每天稱讚你，但每當事情沒散掉，其實都有你的一份功勞。",
+        quote: "你不一定站在舞台中央，但沒有你，很多事會悄悄運轉不起來。",
+        traits: [
+          "會主動注意誰的進度落後、誰需要提醒或協助。",
+          "比起當主角，你更在意整個團隊有沒有順利完成任務。",
+          "別人常常一句「拜託你一下」，你就默默幫忙收好爛攤子。"
+        ],
+        mate: { shape: "記錄方陣系魔法使", emoji: "📊" },
+        clash: { shape: "即興火花系魔法使", emoji: "🎭" },
+        tips: "你的支援魔法在<b>會計事務科</b>與<b>資料處理科</b>非常實用，讓系統、帳務與資料不會亂掉；在<b>商業經營科</b>裡，你也會是專案和行政流程背後非常重要的核心。"
+      },
+      abyss: {
+        emoji: "🌊",
+        name: "靜默深潛系魔法使",
+        tag: "安靜 · 深度 · 慢熟",
+        rarity: "SSR",
+        rarityClass: "res-rarity-ssr",
+        blessing: "你不一定會想站在聚光燈下，但很多真正重要的長線工作，都需要像你這樣願意「一個人慢慢往下潛」的人。請給自己一點時間，你走得可能比自己想像中還要遠。",
+        quote: "你可能話不多，但一旦想做，就會慢慢往深處潛下去。",
+        traits: [
+          "不太喜歡被催促，比起表現得很厲害，更想穩穩來。",
+          "對有興趣的東西可以一直重複做，不太怕覺得無聊。",
+          "有些計畫你放在心裡想，還沒準備好時不太會講出來。"
+        ],
+        mate: { shape: "演算解析系魔法使", emoji: "🧮" },
+        clash: { shape: "星環連結系魔法使", emoji: "🌐" },
+        tips: "你的深潛魔法很適合需要長期打磨的領域，例如<b>會計事務科</b>、<b>資料處理科／AI 實驗班</b>；在花商，你可以慢慢累積，一點一滴疊出自己的專業，不用跟別人的時間表完全一樣。"
+      }
+    };
+
+    const state = {
+      step: 0,
+      answers: {},
+      total: 12,
+      lastResultKey: null
+    };
+
+    const els = {
+      hero: document.getElementById('heroCard'),
+      quiz: document.getElementById('quizCard'),
+      result: document.getElementById('resultArea'),
+      startBtn: document.getElementById('startBtn'),
+      prevBtn: document.getElementById('prevBtn'),
+      nextBtn: document.getElementById('nextBtn'),
+      questions: document.querySelectorAll('.question-card'),
+      stepText: document.getElementById('stepText'),
+      progressFill: document.getElementById('progressFill'),
+      toast: document.getElementById('toast'),
+      footer: document.getElementById('mainFooter'),
+      screenshotHint: document.getElementById('screenshotHint')
+    };
+
+    const showToast = (msg) => {
+      els.toast.textContent = msg;
+      els.toast.classList.add('show');
+      setTimeout(() => els.toast.classList.remove('show'), 2000);
+    };
+
+    const startQuiz = () => {
+      els.hero.style.display = 'none';
+      els.quiz.style.display = 'block';
+      updateUI();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    // inline onclick 用
+    function startQuizFromButton() {
+      startQuiz();
+    }
+    window.startQuizFromButton = startQuizFromButton;
+
+    if (els.startBtn) {
+      els.startBtn.addEventListener('click', startQuiz);
+    }
+
+    const updateUI = () => {
+      els.questions.forEach((q, idx) => {
+        if (idx === state.step) q.classList.add('active');
+        else q.classList.remove('active');
+      });
+
+      const progress = ((state.step + 1) / state.total) * 100;
+      els.progressFill.style.width = `${progress}%`;
+      els.stepText.textContent = `${state.step + 1} / ${state.total}`;
+
+      els.prevBtn.style.display = state.step === 0 ? 'none' : 'block';
+      els.nextBtn.innerHTML = state.step === state.total - 1 ? '看結果 🔮' : '下一題';
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const calculateResult = () => {
+      const scores = {
+        aurora: 0, ledger: 0, cipher: 0, scribe: 0,
+        nexus: 0, carnival: 0, solace: 0, horizon: 0,
+        atelier: 0, oracle: 0, anchor: 0, abyss: 0
+      };
+
+      Object.values(state.answers).forEach(val => {
+        if (scores[val] !== undefined) scores[val]++;
+      });
+
+      let max = -1;
+      let winner = 'abyss';
+      Object.entries(scores).forEach(([key, score]) => {
+        if (score > max) {
+          max = score;
+          winner = key;
         }
-      };
+      });
 
-      const state = {
-        step: 0,
-        answers: {},
-        total: 12,
-        lastResultKey: null
-      };
+      renderResult(winner);
+    };
 
-      const els = {
-        hero: document.getElementById('heroCard'),
-        quiz: document.getElementById('quizCard'),
-        result: document.getElementById('resultArea'),
-        startBtn: document.getElementById('startBtn'),
-        prevBtn: document.getElementById('prevBtn'),
-        nextBtn: document.getElementById('nextBtn'),
-        questions: document.querySelectorAll('.question-card'),
-        stepText: document.getElementById('stepText'),
-        progressFill: document.getElementById('progressFill'),
-        toast: document.getElementById('toast'),
-        footer: document.getElementById('mainFooter'),
-        screenshotHint: document.getElementById('screenshotHint')
-      };
+    const renderResult = (key) => {
+      const data = resultsData[key];
+      state.lastResultKey = key;
 
-      const showToast = (msg) => {
-        els.toast.textContent = msg;
-        els.toast.classList.add('show');
-        setTimeout(() => els.toast.classList.remove('show'), 2000);
-      };
+      const html = `
+        <div class="result-header">
+          <div class="res-orbit-wrap">
+            <div class="res-orbit"></div>
+            <div class="res-orbit-inner"></div>
+            <div class="res-emoji">${data.emoji}</div>
+          </div>
+          <h2 class="res-title">${data.name}</h2>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+            <span class="res-tag">${data.tag}</span>
+            <span class="res-rarity ${data.rarityClass}">★ ${data.rarity} ★</span>
+          </div>
+        </div>
+        <div class="result-body">
+          <div class="result-body-inner">
+            <p class="res-quote">${data.quote}</p>
 
-      const startQuiz = () => {
-        els.hero.style.display = 'none';
-        els.quiz.style.display = 'block';
-        updateUI();
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      };
+            <div class="trait-box">
+              <div class="trait-title">YOUR BASIC TRAITS</div>
+              <ul class="trait-list">
+                ${data.traits.map(t => `<li>${t}</li>`).join('')}
+              </ul>
+            </div>
 
-      if (els.startBtn) {
-        els.startBtn.addEventListener('click', startQuiz);
+            <div class="relation-grid">
+              <div class="relation-card good">
+                <span class="rel-icon">😍</span>
+                <span class="rel-label">最合拍</span>
+                <div class="rel-name">${data.mate.emoji} ${data.mate.shape}</div>
+              </div>
+              <div class="relation-card bad">
+                <span class="rel-icon">🤯</span>
+                <span class="rel-label">容易磨合出火花</span>
+                <div class="rel-name">${data.clash.emoji} ${data.clash.shape}</div>
+              </div>
+            </div>
+
+            <div class="blessing-box">
+              <div class="blessing-title">🎁 專屬祝福語</div>
+              <div class="blessing-text">${data.blessing}</div>
+            </div>
+
+            <!-- 說明區：一般模式顯示，截圖模式自動隱藏 -->
+            <div class="school-tips hide-on-shot">
+              <div class="tips-title">💡 在花商，這種魔法可以怎麼練？</div>
+              <div class="tips-text">${data.tips}</div>
+            </div>
+
+            <!-- 操作按鈕：一般模式顯示，截圖模式自動隱藏 -->
+            <div class="result-actions hide-on-shot">
+              <button onclick="toggleScreenshotMode()" class="btn-secondary light">
+                ✨ 截圖分享模式
+              </button>
+
+              <button onclick="downloadJpg()" class="btn-secondary light">
+                📥 下載 JPG 分享圖
+              </button>
+
+              <div style="text-align:center; font-size:0.8rem; color:#6b7280; margin:10px 0 5px;">
+                想再看看現實世界的說明書？
+              </div>
+
+              <div class="link-group">
+                <a href="https://www.hlbh.hlc.edu.tw/ischool/publish_page/0/" target="_blank" class="btn-link">
+                  🏫 花蓮高商官網
+                </a>
+                <a href="https://www.facebook.com/hlbhtw" target="_blank" class="btn-link fb">
+                  👍 花商粉專
+                </a>
+              </div>
+
+              <button onclick="location.reload()" class="btn-secondary light" style="margin-top:10px; font-size:0.85rem;">
+                ↻ 想換一個魔法系再試一次
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      els.quiz.style.display = 'none';
+      els.result.innerHTML = html;
+      els.result.style.display = 'block';
+      els.result.classList.remove('draw');
+      void els.result.offsetWidth;
+      els.result.classList.add('draw');
+
+      els.hero.style.display = 'none';
+      els.footer.style.display = 'block';
+      els.screenshotHint.style.display = 'block';
+    };
+
+    // 截圖模式：只保留圖鑑卡片，隱藏說明與按鈕
+    window.toggleScreenshotMode = () => {
+      document.body.classList.toggle('screenshot-mode');
+      if (document.body.classList.contains('screenshot-mode')) {
+        showToast('已切換為截圖模式，說明與按鈕都幫你藏好了 📸');
+      } else {
+        showToast('已回到一般模式，可以繼續看完整說明 🪄');
+      }
+    };
+
+    // 下一題 / 上一題
+    els.nextBtn.addEventListener('click', () => {
+      const currentQ = document.querySelector(`.question-card[data-q="${state.step + 1}"]`);
+      const checked = currentQ.querySelector('input:checked');
+
+      if (!checked) {
+        showToast('選一個啦，別想偷懶！👻');
+        return;
       }
 
-      const updateUI = () => {
-        els.questions.forEach((q, idx) => {
-          if (idx === state.step) q.classList.add('active');
-          else q.classList.remove('active');
-        });
+      state.answers[`q${state.step + 1}`] = checked.value;
 
-        const progress = ((state.step + 1) / state.total) * 100;
-        els.progressFill.style.width = `${progress}%`;
-        els.stepText.textContent = `${state.step + 1} / ${state.total}`;
-
-        els.prevBtn.style.display = state.step === 0 ? 'none' : 'block';
-        els.nextBtn.innerHTML = state.step === state.total - 1 ? '看結果 🔮' : '下一題';
-
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      };
-
-      const calculateResult = () => {
-        const scores = {
-          aurora: 0, ledger: 0, cipher: 0, scribe: 0,
-          nexus: 0, carnival: 0, solace: 0, horizon: 0,
-          atelier: 0, oracle: 0, anchor: 0, abyss: 0
-        };
-
-        Object.values(state.answers).forEach(val => {
-          if (scores[val] !== undefined) scores[val]++;
-        });
-
-        let max = -1;
-        let winner = 'abyss';
-        Object.entries(scores).forEach(([key, score]) => {
-          if (score > max) {
-            max = score;
-            winner = key;
-          }
-        });
-
-        renderResult(winner);
-      };
-
-      const renderResult = (key) => {
-        const data = resultsData[key];
-        state.lastResultKey = key;
-
-        const html = `
-          <div class="result-header">
-            <div class="res-orbit-wrap">
-              <div class="res-orbit"></div>
-              <div class="res-orbit-inner"></div>
-              <div class="res-emoji">${data.emoji}</div>
-            </div>
-            <h2 class="res-title">${data.name}</h2>
-            <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
-              <span class="res-tag">${data.tag}</span>
-              <span class="res-rarity ${data.rarityClass}">${data.rarity}</span>
-            </div>
-          </div>
-          <div class="result-body">
-            <div class="result-body-inner">
-              <p class="res-quote">${data.quote}</p>
-
-              <div class="trait-box">
-                <div class="trait-title">YOUR BASIC TRAITS</div>
-                <ul class="trait-list">
-                  ${data.traits.map(t => `<li>${t}</li>`).join('')}
-                </ul>
-              </div>
-
-              <div class="relation-grid">
-                <div class="relation-card good">
-                  <span class="rel-icon">😍</span>
-                  <span class="rel-label">最合拍</span>
-                  <div class="rel-name">${data.mate.emoji} ${data.mate.shape}</div>
-                </div>
-                <div class="relation-card bad">
-                  <span class="rel-icon">🤯</span>
-                  <span class="rel-label">容易磨合出火花</span>
-                  <div class="rel-name">${data.clash.emoji} ${data.clash.shape}</div>
-                </div>
-              </div>
-
-              <div class="blessing-box">
-                <div class="blessing-title">🎁 專屬祝福語</div>
-                <div class="blessing-text">${data.blessing}</div>
-              </div>
-
-              <!-- 花商說明區：一般模式顯示，截圖模式自動隱藏 -->
-              <div class="school-tips hide-on-shot">
-                <div class="tips-title">💡 在花商，這種魔法可以怎麼練？</div>
-                <div class="tips-text">${data.tips}</div>
-              </div>
-
-              <!-- 操作按鈕：一般模式顯示，截圖模式自動隱藏 -->
-              <div class="result-actions hide-on-shot">
-                <button onclick="toggleScreenshotMode()" class="btn-secondary light">
-                  ✨ 截圖分享模式
-                </button>
-
-                <button onclick="downloadJpg()" class="btn-secondary light">
-                  📥 下載 JPG 分享圖
-                </button>
-
-                <div style="text-align:center; font-size:0.8rem; color:#6b7280; margin:10px 0 5px;">
-                  想再看看現實世界的說明書？
-                </div>
-
-                <div class="link-group">
-                  <a href="https://www.hlbh.hlc.edu.tw/ischool/publish_page/0/" target="_blank" class="btn-link">
-                    🏫 花蓮高商官網
-                  </a>
-                  <a href="https://www.facebook.com/hlbhtw" target="_blank" class="btn-link fb">
-                    👍 花商粉專
-                  </a>
-                </div>
-
-                <button onclick="location.reload()" class="btn-secondary light" style="margin-top:10px; font-size:0.85rem;">
-                  ↻ 想換一個魔法系再試一次
-                </button>
-              </div>
-            </div>
-          </div>
-        `;
-
-        els.quiz.style.display = 'none';
-        els.result.innerHTML = html;
-        els.result.style.display = 'block';
-        els.result.classList.remove('draw');
-        void els.result.offsetWidth;
-        els.result.classList.add('draw');
-
-        els.hero.style.display = 'none';
-        els.footer.style.display = 'block';
-        els.screenshotHint.style.display = 'block';
-      };
-
-      // 截圖模式：只保留圖鑑卡片，隱藏招生資訊與按鈕
-      window.toggleScreenshotMode = () => {
-        document.body.classList.toggle('screenshot-mode');
-        if (document.body.classList.contains('screenshot-mode')) {
-          showToast('已切換為截圖模式，花商資訊與按鈕都幫你藏好了 📸');
-        } else {
-          showToast('已回到一般模式，可以繼續看花商說明 🪄');
-        }
-      };
-
-      // 下一題 / 上一題
-      els.nextBtn.addEventListener('click', () => {
-        const currentQ = document.querySelector(\`.question-card[data-q="\${state.step + 1}"]\`);
-        const checked = currentQ.querySelector('input:checked');
-
-        if (!checked) {
-          showToast('選一個啦，別想偷懶！👻');
-          return;
-        }
-
-        state.answers[\`q\${state.step + 1}\`] = checked.value;
-
-        if (state.step < state.total - 1) {
-          state.step++;
-          updateUI();
-        } else {
-          calculateResult();
-        }
-      });
-
-      els.prevBtn.addEventListener('click', () => {
-        if (state.step > 0) {
-          state.step--;
-          updateUI();
-        }
-      });
-
-      // 下載 JPG 分享圖：自動套用截圖模式，只截 resultArea 卡片
-      window.downloadJpg = () => {
-        const result = document.getElementById('resultArea');
-        const alreadyShot = document.body.classList.contains('screenshot-mode');
-
-        if (!alreadyShot) {
-          document.body.classList.add('screenshot-mode');
-        }
-
-        html2canvas(result, {
-          backgroundColor: "#ffffff",
-          scale: 2,
-          useCORS: true
-        }).then(canvas => {
-          const link = document.createElement('a');
-          link.download = 'hlbh-magic.jpg';
-          link.href = canvas.toDataURL("image/jpeg", 0.92);
-          link.click();
-        }).finally(() => {
-          if (!alreadyShot) {
-            document.body.classList.remove('screenshot-mode');
-          }
-        });
-      };
+      if (state.step < state.total - 1) {
+        state.step++;
+        updateUI();
+      } else {
+        calculateResult();
+      }
     });
+
+    els.prevBtn.addEventListener('click', () => {
+      if (state.step > 0) {
+        state.step--;
+        updateUI();
+      }
+    });
+
+    // 下載 JPG 分享圖
+    window.downloadJpg = () => {
+      const result = document.getElementById('resultArea');
+      const alreadyShot = document.body.classList.contains('screenshot-mode');
+
+      if (!alreadyShot) {
+        document.body.classList.add('screenshot-mode');
+      }
+
+      html2canvas(result, {
+        backgroundColor: "#ffffff",
+        scale: 2,
+        useCORS: true
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'magic-profile.jpg';
+        link.href = canvas.toDataURL("image/jpeg", 0.92);
+        link.click();
+      }).finally(() => {
+        if (!alreadyShot) {
+          document.body.classList.remove('screenshot-mode');
+        }
+      });
+    };
   </script>
 
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
