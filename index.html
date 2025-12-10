@@ -1,0 +1,1686 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>未來魔法使圖鑑｜花商魔法適性小測驗</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+  <meta name="theme-color" content="#6366f1" />
+  <meta
+    name="description"
+    content="不看成績，用 12 種「異世界魔法學派」，幫你偷看自己其實擅長哪一種魔法，在未來的世界探險大放異彩。"
+  />
+  <meta property="og:title" content="測測你是哪種未來的魔法使？" />
+  <meta property="og:description" content="花商魔法適性小測驗：12 種魔法學派，看你比較像哪一種未來魔法使。" />
+  <meta property="og:image" content="https://www.hlbh.hlc.edu.tw/ischool/resources/WID_0_2_0561cd35e41257124f57c1529188099684347712/logo.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <style>
+/* === Screenshot Mode: 固定 9:16 畫布比例 === */
+.screenshot-mode #resultArea {
+  width: 1080px;
+  height: 1920px;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  padding: 60px;
+  box-sizing: border-box;
+  transform: scale(1);
+  background: #fafafa;
+  position: relative;
+}
+
+/* 僅供娛樂參考 */
+.screenshot-mode #resultArea::after {
+  content: "僅供娛樂參考";
+  position: absolute;
+  right: 40px;
+  bottom: 40px;
+  font-size: 32px;
+  opacity: 0.35;
+  color: #555;
+}
+
+/* 右下角 HLBH 點名（在有 school-tips 的區域） */
+.screenshot-mode .school-tips::after {
+  content: "HLBH · 花蓮高商設計";
+  position: absolute;
+  right: 40px;
+  bottom: 110px;
+  font-size: 28px;
+  opacity: 0.35;
+  color: #333;
+}
+
+/* === Reset & Theme === */
+    :root {
+      --primary: #6366f1;
+      --primary-light: #818cf8;
+      --accent: #10b981;
+      --accent-pop: #fbbf24;
+      --clash: #f43f5e;
+      --bg: #020617;
+      --bg-soft: #020617;
+      --glass: rgba(15,23,42,0.92);
+      --glass-soft: rgba(15,23,42,0.86);
+      --border: rgba(148,163,184,0.2);
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --shadow-soft: 0 18px 45px rgba(15,23,42,0.42);
+      --radius-lg: 26px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Noto Sans TC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at top, #e5e7eb 0, #f9fafb 45%, #e5e7eb 100%);
+      color: #0f172a;
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* === Layout 背景光 === */
+    .magic-bg-orbit {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      background:
+        radial-gradient(circle at 10% 20%, rgba(56,189,248,0.18) 0, transparent 55%),
+        radial-gradient(circle at 90% 10%, rgba(129,140,248,0.18) 0, transparent 60%),
+        radial-gradient(circle at 50% 100%, rgba(248,250,252,0.28) 0, transparent 65%),
+        radial-gradient(circle at 10% 100%, rgba(45,212,191,0.16) 0, transparent 65%);
+    }
+
+    .page-container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 24px 16px 32px;
+    }
+
+    .glass-card {
+      background:
+        radial-gradient(circle at top, rgba(148,163,184,0.18) 0, rgba(15,23,42,0.96) 46%, rgba(15,23,42,1) 100%);
+      border-radius: var(--radius-lg);
+      padding: 20px 18px 24px;
+      border: 1px solid rgba(148,163,184,0.3);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+      color: var(--text-main);
+    }
+
+    .glass-card::before {
+      content: "";
+      position: absolute;
+      inset: -60%;
+      background:
+        radial-gradient(circle at 0 0, rgba(248,250,252,0.24) 0, transparent 60%),
+        radial-gradient(circle at 100% 0, rgba(59,130,246,0.16) 0, transparent 55%);
+      opacity: 0.4;
+      mix-blend-mode: screen;
+      pointer-events: none;
+    }
+
+    .glass-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* === Hero === */
+    .hero-section {
+      margin-bottom: 20px;
+      text-align: left;
+      background:
+        radial-gradient(circle at top left, rgba(244,244,245,0.22) 0, transparent 55%),
+        radial-gradient(circle at bottom right, rgba(56,189,248,0.2) 0, rgba(15,23,42,1) 55%);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.7);
+      border: 1px solid rgba(148,163,184,0.6);
+      color: rgba(226,232,240,0.95);
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .hero-title {
+      font-size: 2rem;
+      line-height: 1.15;
+      margin: 4px 0 10px;
+      letter-spacing: 0.04em;
+      color: #f9fafb;
+      text-shadow: 0 14px 40px rgba(15,23,42,0.95);
+    }
+
+    @media (min-width: 480px) {
+      .hero-title {
+        font-size: 2.4rem;
+      }
+    }
+
+    .shape-icons {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+      opacity: 0.9;
+    }
+
+    .hero-desc {
+      font-size: 0.95rem;
+      color: rgba(226,232,240,0.9);
+      line-height: 1.6;
+      margin: 0 0 14px;
+    }
+
+    .btn-action {
+      margin-top: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #020617;
+      background: linear-gradient(135deg, #facc15, #f97316);
+      box-shadow:
+        0 12px 30px rgba(248,250,252,0.45),
+        0 0 0 1px rgba(15,23,42,0.5);
+      transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+    }
+
+    .btn-action span {
+      font-size: 1.1rem;
+    }
+
+    .btn-action:hover {
+      transform: translateY(-1px);
+      box-shadow:
+        0 18px 40px rgba(248,250,252,0.55),
+        0 0 0 1px rgba(15,23,42,0.6);
+      filter: brightness(1.02);
+    }
+
+    .btn-action:active {
+      transform: translateY(0);
+      box-shadow:
+        0 8px 20px rgba(15,23,42,0.9),
+        0 0 0 1px rgba(15,23,42,0.6);
+    }
+
+    /* === Quiz === */
+    .progress-container {
+      margin-bottom: 16px;
+    }
+
+    .progress-text {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .progress-track {
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.95);
+      border: 1px solid rgba(148,163,184,0.5);
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      width: 8%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #22c55e, #a855f7, #6366f1);
+      box-shadow: 0 0 18px rgba(129,140,248,0.9);
+      transition: width 0.28s ease-out;
+    }
+
+    .question-card {
+      display: none;
+      padding: 14px 10px 6px;
+      border-radius: 20px;
+      background: radial-gradient(circle at top, rgba(30,64,175,0.6) 0, rgba(15,23,42,0.95) 55%, rgba(15,23,42,1) 100%);
+      border: 1px solid rgba(148,163,184,0.45);
+      margin-bottom: 12px;
+      position: relative;
+    }
+
+    .question-card.active {
+      display: block;
+    }
+
+    .q-number {
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(148,163,184,0.9);
+      margin-bottom: 6px;
+    }
+
+    .q-text {
+      margin: 0 0 10px;
+      font-size: 1rem;
+      color: #e5e7eb;
+    }
+
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+
+    @media (min-width: 640px) {
+      .options-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+    }
+
+    .option-item {
+      display: block;
+    }
+
+    .option-item input {
+      display: none;
+    }
+
+    .option-content {
+      font-size: 0.9rem;
+      line-height: 1.45;
+      padding: 9px 10px;
+      border-radius: 14px;
+      border: 1px solid rgba(148,163,184,0.55);
+      background: radial-gradient(circle at top left, rgba(148,163,184,0.2) 0, rgba(15,23,42,0.9) 55%);
+      color: rgba(226,232,240,0.9);
+      cursor: pointer;
+      transition: all 0.16s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .option-content::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(251,191,36,0.14) 0, transparent 55%);
+      opacity: 0;
+      transition: opacity 0.18s ease;
+    }
+
+    .option-item input:checked + .option-content {
+      border-color: #fbbf24;
+      background: radial-gradient(circle at top, rgba(251,191,36,0.18) 0, rgba(15,23,42,0.98) 65%);
+      box-shadow: 0 0 0 1px rgba(251,191,36,0.4), 0 14px 28px rgba(15,23,42,0.9);
+      transform: translateY(-1px);
+    }
+
+    .option-item input:checked + .option-content::before {
+      opacity: 1;
+    }
+
+    .option-content:hover {
+      border-color: rgba(251,191,36,0.7);
+    }
+
+    .quiz-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 6px;
+      gap: 8px;
+    }
+
+    .btn-nav {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      border: 1px solid rgba(148,163,184,0.8);
+      background: rgba(15,23,42,0.9);
+      color: var(--text-main);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.16s ease;
+    }
+
+    .btn-nav.primary {
+      border-color: #facc15;
+      background: linear-gradient(135deg, #facc15, #f97316);
+      color: #111827;
+      box-shadow: 0 10px 25px rgba(251,191,36,0.45);
+    }
+
+    .btn-nav.primary:hover {
+      filter: brightness(1.03);
+    }
+
+    .btn-nav.secondary {
+      opacity: 0.85;
+    }
+
+    .btn-nav:disabled {
+      opacity: 0.4;
+      cursor: default;
+    }
+
+    /* === Result === */
+    .result-card {
+      margin-top: 16px;
+      min-height: 320px;
+      border-radius: 24px;
+      padding: 18px 12px 18px;
+      background: radial-gradient(circle at top, rgba(56,189,248,0.24) 0, rgba(15,23,42,0.96) 55%);
+      border: 1px solid rgba(148,163,184,0.6);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      position: relative;
+      animation: cardReveal 0.55s ease-out;
+    }
+
+    .result-card::before {
+      content: "";
+      position: absolute;
+      top: -20%;
+      right: -10%;
+      width: 60%;
+      height: 60%;
+      background: radial-gradient(circle, rgba(129,140,248,0.42) 0, transparent 65%);
+      filter: blur(40px);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+
+    .result-header {
+      text-align: center;
+      margin-bottom: 10px;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* 抽卡光圈 + emoji 容器 */
+    .res-orbit {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .res-orbit-ring {
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+      background:
+        conic-gradient(from 0deg,
+          rgba(248,250,252,0.08),
+          rgba(129,140,248,0.9),
+          rgba(45,212,191,0.9),
+          rgba(244,244,245,0.08));
+      opacity: 0.85;
+      filter: blur(1px);
+      box-shadow:
+        0 0 22px rgba(129,140,248,0.75),
+        0 0 42px rgba(45,212,191,0.45);
+      animation: spinOrbit 6s linear infinite;
+    }
+
+    .res-emoji {
+      position: relative;
+      font-size: 2.9rem;
+      margin-bottom: 0;
+      filter: drop-shadow(0 12px 20px rgba(15,23,42,0.95));
+      animation: summonPop 0.65s ease-out;
+    }
+
+    .res-title {
+      margin: 4px 0 0;
+      font-size: 1.4rem;
+      letter-spacing: 0.06em;
+      text-transform: none;
+      color: #f9fafb;
+    }
+
+    .res-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      margin-top: 6px;
+      font-size: 0.75rem;
+      color: rgba(226,232,240,0.95);
+      background: radial-gradient(circle at top left, rgba(59,130,246,0.36) 0, rgba(15,23,42,1) 55%);
+      border: 1px solid rgba(191,219,254,0.8);
+    }
+
+    .res-rarity {
+      margin-top: 6px;
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      border: 1px solid;
+      box-shadow: 0 0 22px rgba(15,23,42,0.9);
+    }
+
+    .res-rarity-ssr {
+      border-color: #fbbf24;
+      background: linear-gradient(135deg, #f97316, #facc15, #e5e7eb);
+      color: #1f2933;
+      text-shadow: none;
+    }
+
+    .res-rarity-sr {
+      border-color: #38bdf8;
+      background: linear-gradient(135deg, #a855f7, #38bdf8);
+      color: #0f172a;
+    }
+
+    .res-rarity-r {
+      border-color: #34d399;
+      background: linear-gradient(135deg, #22c55e, #a7f3d0);
+      color: #052e16;
+    }
+
+    .res-rarity-n {
+      border-color: #e5e7eb;
+      background: linear-gradient(135deg, #e5e7eb, #cbd5f5);
+      color: #111827;
+    }
+
+    .result-body-inner {
+      border-radius: 18px;
+      padding: 12px 11px 12px;
+      background: radial-gradient(circle at top, rgba(15,23,42,0.3) 0, rgba(15,23,42,0.98) 55%);
+      border: 1px solid rgba(148,163,184,0.6);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .res-quote {
+      font-size: 0.9rem;
+      color: rgba(226,232,240,0.95);
+      line-height: 1.6;
+      margin: 0 0 10px;
+    }
+
+    .trait-box {
+      border-radius: 14px;
+      padding: 8px 8px 8px;
+      background: radial-gradient(circle at top left, rgba(45,212,191,0.24) 0, rgba(15,23,42,0.98) 65%);
+      border: 1px solid rgba(34,197,94,0.75);
+      margin-bottom: 10px;
+    }
+
+    .trait-title {
+      font-size: 0.7rem;
+      letter-spacing: 0.17em;
+      text-transform: uppercase;
+      color: rgba(187,247,208,0.9);
+      margin-bottom: 4px;
+    }
+
+    .trait-list {
+      margin: 0;
+      padding-left: 1.1em;
+      font-size: 0.85rem;
+      color: rgba(226,232,240,0.98);
+      line-height: 1.6;
+    }
+
+    .relation-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .relation-card {
+      border-radius: 14px;
+      padding: 8px 8px;
+      font-size: 0.8rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      border: 1px solid rgba(148,163,184,0.6);
+      background: rgba(15,23,42,0.98);
+    }
+
+    .relation-card.good {
+      border-color: rgba(34,197,94,0.9);
+      background: radial-gradient(circle at top, rgba(22,163,74,0.7) 0, rgba(15,23,42,1) 65%);
+    }
+
+    .relation-card.bad {
+      border-color: rgba(248,113,113,0.9);
+      background: radial-gradient(circle at top, rgba(248,113,113,0.72) 0, rgba(15,23,42,1) 65%);
+    }
+
+    .rel-icon {
+      font-size: 1rem;
+    }
+
+    .rel-label {
+      font-size: 0.7rem;
+      opacity: 0.85;
+    }
+
+    .rel-name {
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .blessing-box {
+      border-radius: 14px;
+      background: radial-gradient(circle at top left, rgba(251,191,36,0.24) 0, rgba(15,23,42,0.98) 65%);
+      border: 1px solid rgba(251,191,36,0.8);
+      padding: 8px 8px;
+      margin-bottom: 10px;
+    }
+
+    .blessing-title {
+      font-size: 0.75rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(250,250,250,0.94);
+      margin-bottom: 4px;
+    }
+
+    .blessing-text {
+      font-size: 0.85rem;
+      color: rgba(254,249,195,0.96);
+      line-height: 1.6;
+    }
+
+    .school-tips {
+      position: relative;
+      border-radius: 14px;
+      background: radial-gradient(circle at top left, rgba(59,130,246,0.3) 0, rgba(15,23,42,0.98) 65%);
+      border: 1px solid rgba(147,197,253,0.9);
+      padding: 9px 9px 9px;
+      margin-bottom: 10px;
+      font-size: 0.84rem;
+      color: rgba(219,234,254,0.97);
+    }
+
+    .tips-title {
+      font-size: 0.76rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(191,219,254,0.95);
+      margin-bottom: 3px;
+    }
+
+    .tips-text {
+      line-height: 1.6;
+    }
+
+    .result-actions {
+      margin-top: 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .btn-secondary {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      border: 1px solid rgba(148,163,184,0.9);
+      background: rgba(248,250,252,0.98);
+      color: #0f172a;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-secondary:hover {
+      border-color: #facc15;
+      color: #0f172a;
+      filter: brightness(1.02);
+    }
+
+    .link-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .btn-link {
+      flex: 1;
+      min-width: 0;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      border: 1px solid rgba(148,163,184,0.9);
+      background: rgba(15,23,42,0.98);
+      color: rgba(226,232,240,0.96);
+      text-align: center;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .btn-link.fb {
+      border-color: #60a5fa;
+    }
+
+    .btn-link:hover {
+      border-color: #fbbf24;
+      color: #fef9c3;
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%) translateY(120%);
+      background: rgba(15,23,42,0.96);
+      color: #e5e7eb;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.8rem;
+      border: 1px solid rgba(248,250,252,0.3);
+      box-shadow: 0 14px 40px rgba(15,23,42,0.9);
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.22s ease-out;
+      z-index: 50;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Footer */
+    .page-footer {
+      margin-top: 18px;
+      font-size: 0.75rem;
+      color: rgba(51,65,85,0.9);
+      text-align: center;
+      line-height: 1.6;
+    }
+
+    .screenshot-hint {
+      margin-top: 6px;
+      font-size: 0.75rem;
+      text-align: center;
+      color: rgba(107,114,128,0.9);
+      display: none;
+    }
+
+    /* Screenshot mode: 隱藏特定元素 */
+    .screenshot-mode .hide-on-shot {
+      display: none !important;
+    }
+
+    .screenshot-mode body,
+    .screenshot-mode #pageContainer {
+      overflow: visible;
+    }
+
+    @media (min-width: 768px) {
+      .page-container {
+        padding: 26px 24px 32px;
+      }
+
+      .glass-card {
+        padding: 22px 22px 24px;
+      }
+    }
+
+    /* === 動畫 keyframes === */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes spinOrbit {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    @keyframes summonPop {
+      0%   { transform: scale(0.5) translateY(30px); opacity: 0; }
+      60%  { transform: scale(1.05) translateY(0);  opacity: 1; }
+      100% { transform: scale(1) translateY(0);     opacity: 1; }
+    }
+
+    @keyframes cardReveal {
+      0%   { transform: scale(0.92); opacity: 0; }
+      60%  { transform: scale(1.02); opacity: 1; }
+      100% { transform: scale(1);    opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="magic-bg-orbit"></div>
+
+  <div style="position:fixed; inset:0; pointer-events:none; mix-blend-mode:screen; opacity:0.4; z-index:-1;">
+    <div style="position:absolute; top:-10%; right:-10%; width:60%; height:60%; background:radial-gradient(circle, rgba(255,255,255,0.34) 0%, transparent 70%); border-radius:50%; filter:blur(60px); pointer-events:none; z-index:1;"></div>
+  </div>
+
+  <div class="page-container" id="pageContainer">
+    
+    <!-- HERO -->
+    <section class="glass-card hero-section" id="heroCard">
+      <span class="hero-badge">花商潛力解碼 · 異世界魔法設定集</span>
+      <h1 class="hero-title">測測你是哪種<br>未來的魔法使？</h1>
+      <div class="shape-icons">
+        <span>📜</span><span>🎨</span><span>🌐</span><span>🧭</span><span>🔮</span>
+      </div>
+      <p class="hero-desc">
+        這不是升學測驗，只是偷偷看一眼：<br>
+        如果把日常生活當成魔法修行，你可能比較擅長哪一系？<br>
+        12 種異世界魔法學派，選直覺就好。
+      </p>
+      <button class="btn-action" id="startBtn">
+        開始小測驗 <span>✨</span>
+      </button>
+      <div style="margin-top: 12px; font-size: 0.75rem; opacity: 0.7;">
+        約 2 分鐘完成 · 推薦手機直式遊玩
+      </div>
+    </section>
+
+    <!-- QUIZ -->
+    <section class="glass-card" id="quizCard" style="display:none;">
+      <div class="progress-container">
+        <div class="progress-text">
+          <span>PROGRESS</span>
+          <span id="stepText">1 / 12</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-bar" id="progressFill"></div>
+        </div>
+      </div>
+
+      <form id="quizForm">
+        <!-- Q1 -->
+        <div class="question-card active" data-q="1">
+          <div class="q-number">Question 01</div>
+          <h3 class="q-text">分組報告大家一片安靜，你通常會「下意識」先做什麼？</h3>
+          <div class="options-grid">
+            <label class="option-item">
+              <input type="radio" name="q1" value="aurora">
+              <div class="option-content">打開簡報，先把版面和配色調到自己看得順眼。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q1" value="ledger">
+              <div class="option-content">拿出紙或開備忘錄，列一下要做哪幾件事、誰負責什麼。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q1" value="nexus">
+              <div class="option-content">先問一句：「大家比較想做什麼？」試著讓人開口。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q1" value="anchor">
+              <div class="option-content">默默把檔案整理好、群組開好，等大家丟東西進來。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q1" value="abyss">
+              <div class="option-content">先觀察一圈，心想再等等看，有人講話我再跟上。</div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="question-card" data-q="2">
+          <div class="q-number">Question 02</div>
+          <h3 class="q-text">如果突然多出一個悠閒下午，你最有可能怎麼用？</h3>
+          <div class="options-grid">
+            <label class="option-item">
+              <input type="radio" name="q2" value="aurora">
+              <div class="option-content">剪一支小影片、修幾張圖，發個限動等讚數慢慢跳。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q2" value="cipher">
+              <div class="option-content">找一個一直想弄懂的東西，看影片或文章研究一下。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q2" value="solace">
+              <div class="option-content">去一個安靜的地方聽歌、散步，讓腦袋放空一下。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q2" value="carnival">
+              <div class="option-content">約朋友出門逛逛，或打遊戲語音聊天，感受一下人群的能量。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q2" value="horizon">
+              <div class="option-content">打開各種學校或科系的網站、社群，偷偷研究一下「別的選項」。</div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="question-card" data-q="3">
+          <div class="q-number">Question 03</div>
+          <h3 class="q-text">如果你是一個 RPG 遊戲裡的角色，團隊快滅團時你比較像哪一種？</h3>
+          <div class="options-grid">
+            <label class="option-item">
+              <input type="radio" name="q3" value="solace">
+              <div class="option-content">在後面默默補血、補狀態，確保大家不會直接倒掉。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q3" value="anchor">
+              <div class="option-content">記得大家的血量、道具數量，負責提醒什麼時候該收手。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q3" value="aurora">
+              <div class="option-content">放一個華麗大招，就算輸了也要輸得很有畫面感。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q3" value="nexus">
+              <div class="option-content">開麥克風穩住大家情緒，說「先不要慌，我們還有這些方法」。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q3" value="oracle">
+              <div class="option-content">已經默默觀察 Boss 模式，準備下一輪重來時提出新打法。</div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="question-card" data-q="4">
+          <div class="q-number">Question 04</div>
+          <h3 class="q-text">下面哪一句話，最像你對「未來工作」的期待？</h3>
+          <div class="options-grid">
+            <label class="option-item">
+              <input type="radio" name="q4" value="atelier">
+              <div class="option-content">希望工作現場是有氛圍、有儀式感的，可以把普通的事變成一種體驗。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q4" value="cipher">
+              <div class="option-content">希望能有空間深入研究某些系統或領域，變成那個大家會來問問題的人。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q4" value="carnival">
+              <div class="option-content">希望每天都會遇到不同的人、不同事件，感覺生活不會無聊。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q4" value="ledger">
+              <div class="option-content">希望工作內容有一定的穩定節奏，可以確實完成一件件任務。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q4" value="horizon">
+              <div class="option-content">希望工作能讓我有機會移動、出差、接觸不同城市與文化。</div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="question-card" data-q="5">
+          <div class="q-number">Question 05</div>
+          <h3 class="q-text">當老師宣布要做一個「跟現實世界有關」的專題，你聽到哪一種最有興趣？</h3>
+          <div class="options-grid">
+            <label class="option-item">
+              <input type="radio" name="q5" value="scribe">
+              <div class="option-content">做一本小誌、故事集或訪談，記錄某一群人的生活。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q5" value="atelier">
+              <div class="option-content">設計一場小型展覽或體驗活動，讓人實際走進來感受。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q5" value="cipher">
+              <div class="option-content">整理一堆資料，分析背後的規律或問題，做出有說服力的結論。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q5" value="nexus">
+              <div class="option-content">負責串聯不同組別、社群或店家，讓大家真的可以合作起來。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q5" value="oracle">
+              <div class="option-content">試著預測某個產業或議題未來可能變成什麼樣子，做「未來地圖」。</div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="question-card" data-q="6">
+          <div class="q-number">Question 06</div>
+          <h3 class="q-text">如果把「花商生活」當成一個大型遊戲，你最想升級哪一種能力？</h3>
+          <div class="options-grid">
+            <label class="option-item">
+              <input type="radio" name="q6" value="aurora">
+              <div class="option-content">讓自己的作品更有風格，走在路上就能被認出「這一看就是你做的」。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q6" value="ledger">
+              <div class="option-content">管理時間和任務的能力，把一堆雜事變成可以完成的清單。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q6" value="nexus">
+              <div class="option-content">更自在地跟不同人聊起來，讓自己不會被班級氣氛吃掉。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q6" value="cipher">
+              <div class="option-content">專心研究某一門技能，讓自己在那個領域有明顯的專長。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q6" value="solace">
+              <div class="option-content">照顧情緒與身心狀態的能力，不再被壓力追著跑。</div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="question-card" data-q="7">
+          <div class="q-number">Question 07</div>
+          <h3 class="q-text">你對「成為大人」這件事，現在最真實的感覺是什麼？</h3>
+          <div class="options-grid">
+            <label class="option-item">
+              <input type="radio" name="q7" value="horizon">
+              <div class="option-content">想先多看一點世界，不急著被一種答案綁死。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q7" value="anchor">
+              <div class="option-content">比較擔心經濟獨立、家人的期待，希望自己能穩穩站好。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q7" value="carnival">
+              <div class="option-content">希望未來的生活不要只剩工作，還想有很多活動和人際連結。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q7" value="cipher">
+              <div class="option-content">覺得要有一兩個硬實力傍身，才不會在變動的時代被淘汰。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q7" value="abyss">
+              <div class="option-content">有一點怕，但也相信只要一步一步累積，總會找到自己的位置。</div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q8 -->
+        <div class="question-card" data-q="8">
+          <div class="q-number">Question 08</div>
+          <h3 class="q-text">如果未來有機會參加一個「花商 x 異世界」聯名企劃，你最想負責哪個角色？</h3>
+          <div class="options-grid">
+            <label class="option-item">
+              <input type="radio" name="q8" value="aurora">
+              <div class="option-content">視覺總監：負責整個世界觀的畫面、角色造型與場景風格。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q8" value="scribe">
+              <div class="option-content">世界觀編劇：寫出角色背景、任務故事，讓玩家被情節抓住。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q8" value="nexus">
+              <div class="option-content">社群營運：負責跟玩家互動、辦活動，讓整個企劃熱鬧起來。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q8" value="ledger">
+              <div class="option-content">專案管理：確保時間、預算和各組進度不會爆炸。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q8" value="oracle">
+              <div class="option-content">數據分析師：觀察玩家行為，調整關卡與活動，讓企劃長期運轉。</div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q9 -->
+        <div class="question-card" data-q="9">
+          <div class="q-number">Question 09</div>
+          <h3 class="q-text">在班上或社群裡，你最常被需要的「功能」是什麼？</h3>
+          <div class="options-grid">
+            <label class="option-item">
+              <input type="radio" name="q9" value="aurora">
+              <div class="option-content">幫大家做封面、海報或版面，讓東西看起來比較有質感。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q9" value="carnival">
+              <div class="option-content">帶氣氛、想活動、串聯大家，避免場面太安靜或尷尬。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q9" value="anchor">
+              <div class="option-content">整理資料、幫忙收作業、提醒進度，讓事情不會散掉。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q9" value="solace">
+              <div class="option-content">當傾聽者，讓朋友有一個可以放心說話、抒發情緒的地方。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q9" value="cipher">
+              <div class="option-content">解決技術 / 系統問題，例如電腦、程式或複雜設定卡關時出現。</div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q10 -->
+        <div class="question-card" data-q="10">
+          <div class="q-number">Question 10</div>
+          <h3 class="q-text">如果把你目前的人生當成一個「長期任務」，你覺得現在最需要補哪一種資源？</h3>
+          <div class="options-grid">
+            <label class="option-item">
+              <input type="radio" name="q10" value="ledger">
+              <div class="option-content">現實技能點數：例如會計、資料處理、語文能力，等於是「吃飯的本事」。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q10" value="solace">
+              <div class="option-content">心靈與情緒值：希望自己在壓力裡也能穩住，不被情緒拖著跑。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q10" value="horizon">
+              <div class="option-content">視野地圖：想多知道不同學校、科系、國家到底在做什麼。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q10" value="nexus">
+              <div class="option-content">人際連結：想多認識一些可以一起合作、互相支持的人。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q10" value="cipher">
+              <div class="option-content">系統理解：希望能看懂更多背後的規則，而不是只照別人說的做。</div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q11 -->
+        <div class="question-card" data-q="11">
+          <div class="q-number">Question 11</div>
+          <h3 class="q-text">如果有一門「異世界魔法實習課」，你會想選哪一種？</h3>
+          <div class="options-grid">
+            <label class="option-item">
+              <input type="radio" name="q11" value="aurora">
+              <div class="option-content">幻光工房實習：跟著學長姐一起做視覺企劃、品牌設計、影像作品。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q11" value="ledger">
+              <div class="option-content">記錄方陣實習：學習記帳、資料整理與專案管理，讓混亂變成秩序。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q11" value="carnival">
+              <div class="option-content">即興火花實習：設計活動、帶團隊，學習如何在現場做出好玩的體驗。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q11" value="cipher">
+              <div class="option-content">演算解析實習：用數據與程式解決問題，練習當一個冷靜的解題者。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q11" value="solace">
+              <div class="option-content">心域治癒實習：學習陪伴、傾聽與自我照顧，成為班上的穩定力量。</div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Q12 -->
+        <div class="question-card" data-q="12">
+          <div class="q-number">Question 12</div>
+          <h3 class="q-text">最後一題：如果有一天，你因為自己的魔法被人記住，最希望是什麼原因？</h3>
+          <div class="options-grid">
+            <label class="option-item">
+              <input type="radio" name="q12" value="scribe">
+              <div class="option-content">因為你替某些被忽略的人或故事發聲，讓更多人看見他們。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q12" value="atelier">
+              <div class="option-content">因為你設計的活動或場域，讓人覺得「走進來就有被照顧到」。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q12" value="nexus">
+              <div class="option-content">因為你總是能把不同領域的人聚在一起，創造新的合作。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q12" value="oracle">
+              <div class="option-content">因為你看見了一些別人還沒注意到的變化，幫助大家作出更好的選擇。</div>
+            </label>
+            <label class="option-item">
+              <input type="radio" name="q12" value="abyss">
+              <div class="option-content">因為你長期默默地做一件事，最後成為某個領域安靜又可靠的存在。</div>
+            </label>
+          </div>
+        </div>
+      </form>
+
+      <div class="quiz-nav">
+        <button type="button" class="btn-nav secondary" id="prevBtn">← 上一題</button>
+        <button type="button" class="btn-nav primary" id="nextBtn">下一題</button>
+      </div>
+    </section>
+
+    <!-- RESULT -->
+    <section class="result-card" id="resultArea" style="display:none;"></section>
+
+    <div class="screenshot-hint" id="screenshotHint">
+      📱 小技巧：可以先切換「截圖分享模式」，再用手機內建截圖或直接下載 JPG。
+    </div>
+
+    <footer class="page-footer" id="mainFooter" style="display:none;">
+      這個小測驗只是幫你用「異世界魔法」的方式，偷看自己的日常天賦，<br>
+      不會被當作正式測驗或評量。真正重要的，是你怎麼使用這些魔法陪自己長大。
+    </footer>
+  </div>
+
+  <div class="toast" id="toast">請先選一個啦，別想偷懶！👻</div>
+
+  <script>
+    /* 12 種異世界魔法學派設定 + 稀有度 */
+
+    const resultsData = {
+      aurora: {
+        emoji: "🎨",
+        name: "幻光工房系魔法使",
+        tag: "視覺 · 故事 · 品牌感",
+        rarity: "R 進階魔法系",
+        rarityClass: "res-rarity-r",
+        rate: 16,
+        blessing: "",
+        quote: "你總是忍不住想把普通的畫面，調成有自己味道的光。",
+        traits: [
+          "看到不好看的版面會很痛苦，會下意識想把它調整得更順眼。",
+          "拍照、錄影或做簡報時，會在意整體的顏色與構圖。",
+          "對於角色、世界觀或品牌故事很有感，會在腦中自己延伸劇情。"
+        ],
+        mate: { shape: "記錄方陣系魔法使", emoji: "📊" },
+        clash: { shape: "靜默深潛系魔法使", emoji: "🌊" },
+        tips: "你的視覺魔法在<b>多媒體設計科</b>會被放大：從影像剪輯、動畫分鏡到品牌設計，都是你的實戰場；搭配<b>商業經營科</b>，未來在行銷與品牌企劃上也會很有優勢。"
+      },
+      ledger: {
+        emoji: "📊",
+        name: "記錄方陣系魔法使",
+        tag: "秩序 · 結構 · 穩定感",
+        rarity: "N 基礎魔法系",
+        rarityClass: "res-rarity-n",
+        rate: 14,
+        blessing: "",
+        quote: "你不一定愛出風頭，但你會讓混亂的事情逐漸變得有條理。",
+        traits: [
+          "會習慣把事情記在紙本、記事本或行事曆，而不是全靠記憶。",
+          "面對要繳交的作業或報告，會先確認時間與格式，再開始動手。",
+          "比起「隨興」，你更喜歡掌握進度的感覺。"
+        ],
+        mate: { shape: "心域治癒系魔法使", emoji: "🫧" },
+        clash: { shape: "邊境探索系魔法使", emoji: "🧭" },
+        tips: "<b>會計事務科</b>、<b>資料處理科</b>和<b>商業經營科</b>都非常需要你的秩序魔法：記帳、報表、系統流程，都是把混亂變清楚的過程；在任何團隊裡，你也會是大家很放心依賴的「穩定核心」。"
+      },
+      cipher: {
+        emoji: "🧮",
+        name: "演算解析系魔法使",
+        tag: "邏輯 · 系統 · 拆解力",
+        rarity: "R 進階魔法系",
+        rarityClass: "res-rarity-r",
+        rate: 12,
+        blessing: "",
+        quote: "你習慣先搞懂規則，再決定要不要打破它。",
+        traits: [
+          "遇到新系統或新工具時，會想知道它「到底怎麼運作」。",
+          "別人覺得很複雜的東西，你會試著拆成幾個步驟理解。",
+          "對數字、規則或邏輯感到有趣，雖然不一定每次都喜歡考試。"
+        ],
+        mate: { shape: "靜默深潛系魔法使", emoji: "🌊" },
+        clash: { shape: "即興火花系魔法使", emoji: "🎭" },
+        tips: "在<b>資料處理科 / AI 實驗班</b>、<b>會計事務科</b>或<b>商業經營科</b>，你的演算魔法會讓你在系統操作、資料分析與決策上特別有優勢；未來若想碰 AI、程式或數據相關工作，也是很重要的底子。"
+      },
+      scribe: {
+        emoji: "📜",
+        name: "敘事編纂系魔法使",
+        tag: "文字 · 觀點 · 世界觀",
+        rarity: "R 進階魔法系",
+        rarityClass: "res-rarity-r",
+        rate: 10,
+        blessing: "",
+        quote: "你在意的，從來不只是資訊，而是背後的故事與意義。",
+        traits: [
+          "會想像別人背後的故事，而不只看表面行為。",
+          "對文章、影劇或遊戲裡的世界觀設定特別有感。",
+          "有時候會在腦中默默幫現實生活下旁白或取標題。"
+        ],
+        mate: { shape: "幻光工房系魔法使", emoji: "🎨" },
+        clash: { shape: "演算解析系魔法使", emoji: "🧮" },
+        tips: "你的敘事魔法在<b>商業經營科</b>（行銷文案、品牌故事）、<b>應用英語科</b>和<b>應用日語科</b>（跨文化溝通、導覽解說）都會派上用場；未來若接觸自媒體經營、企劃提案或內容產業，也會是你的舞台。"
+      },
+      nexus: {
+        emoji: "🌐",
+        name: "星環連結系魔法使",
+        tag: "社群 · 串聯 · 網路感",
+        rarity: "N 基礎魔法系",
+        rarityClass: "res-rarity-n",
+        rate: 19,
+        blessing: "",
+        quote: "你很擅長找到誰跟誰可以連在一起，然後讓事情發生。",
+        traits: [
+          "對社群氛圍敏感，會注意誰被忽略、誰很活躍。",
+          "喜歡幫不同圈子的人互相介紹，看到連結被建立會很開心。",
+          "發文或經營帳號時，會在意整體風格跟互動感。"
+        ],
+        mate: { shape: "即興火花系魔法使", emoji: "🎭" },
+        clash: { shape: "靜默深潛系魔法使", emoji: "🌊" },
+        tips: "在<b>商業經營科</b>、<b>國際貿易科</b>與<b>應用語文科</b>（英 / 日）裡，你的連結魔法特別重要：不論是客戶關係、社群經營或跨國溝通，「把人連在一起」都是關鍵能力；未來也很適合活動企劃與社群營運相關工作。"
+      },
+      carnival: {
+        emoji: "🎭",
+        name: "即興火花系魔法使",
+        tag: "現場 · 節奏 · 氣氛值",
+        rarity: "R 進階魔法系",
+        rarityClass: "res-rarity-r",
+        rate: 12,
+        blessing: "",
+        quote: "你對「場子」的變化特別敏感，知道什麼時候該帶一點火花進來。",
+        traits: [
+          "在需要活絡氣氛的場合，你常常會不自覺地出手救場。",
+          "喜歡現場互動勝過單向輸出，覺得人跟人的交流很重要。",
+          "面對突發狀況，比起恐慌，你更傾向邊做邊調整。"
+        ],
+        mate: { shape: "星環連結系魔法使", emoji: "🌐" },
+        clash: { shape: "記錄方陣系魔法使", emoji: "📊" },
+        tips: "你的火花魔法在<b>商業經營科</b>、<b>國際貿易科</b>與<b>多媒體設計科</b>都非常實用：不論是門市體驗、活動企劃或展演主持，都是你的主場；如果搭配語文能力，未來也很適合走導覽、領隊或服務產業的前線角色。"
+      },
+      solace: {
+        emoji: "🫧",
+        name: "心域治癒系魔法使",
+        tag: "情緒 · 安心 · 支援力",
+        rarity: "SR 稀有魔法系",
+        rarityClass: "res-rarity-sr",
+        rate: 8,
+        blessing: "",
+        quote: "你不一定會說大道理，但跟你在一起，很多人會覺得比較安心。",
+        traits: [
+          "別人心情不好時，你會下意識放慢語氣或陪在旁邊。",
+          "比起爭輸贏，你更在意彼此相處時的感受是不是OK。",
+          "有時候自己會累積很多情緒，但也因此更懂得他人的壓力。"
+        ],
+        mate: { shape: "靜默深潛系魔法使", emoji: "🌊" },
+        clash: { shape: "即興火花系魔法使", emoji: "🎭" },
+        tips: "你的治癒魔法，在<b>商業經營科</b>、<b>國際貿易科</b>的服務情境裡非常重要，能讓客人和同事都比較放心；搭配<b>應用英語科</b>或<b>應用日語科</b>，未來也很適合走接待、觀光或跨文化溝通相關的路。"
+      },
+      horizon: {
+        emoji: "🧭",
+        name: "邊境探索系魔法使",
+        tag: "好奇 · 變動 · 開視野",
+        rarity: "SSR 超稀有魔法系",
+        rarityClass: "res-rarity-ssr",
+        rate: 7,
+        blessing: "你身上有一種「不急著被定義」的特質，在很多同齡人已經放棄好奇心的時候，你還在看遠一點。如果能把這份探索感配上穩定的基本功，你會是一個很有故事的人。",
+        quote: "你不急著把自己關進一個小盒子，因為世界還很大。",
+        traits: [
+          "對別的城市、學校或國家的生活總是有點好奇。",
+          "很怕被鎖死在「只有一種可能」的人生裡。",
+          "會存一些資訊起來，但不會急著下定論。"
+        ],
+        mate: { shape: "幻光工房系魔法使", emoji: "🎨" },
+        clash: { shape: "記錄方陣系魔法使", emoji: "📊" },
+        tips: "你的探索魔法在<b>國際貿易科</b>、<b>應用英語科</b>與<b>應用日語科</b>會被放大，它們都跟不同的國家、文化與市場有關；在花商，你可以先把眼前的技能練好，再慢慢把邊界拉遠。"
+      },
+      atelier: {
+        emoji: "🏟",
+        name: "場域塑形系魔法使",
+        tag: "體驗 · 氛圍 · 儀式感",
+        rarity: "SR 稀有魔法系",
+        rarityClass: "res-rarity-sr",
+        rate: 9,
+        blessing: "",
+        quote: "你在意的不只是事情有沒有做完，而是「做的過程」長什麼樣子。",
+        traits: [
+          "喜歡為重要的日子設計一點小儀式，例如佈置、拍照或小聚會。",
+          "對空間配置、動線與氣氛特別敏感，走進一個地方會立刻有感覺。",
+          "會想像「如果把這裡弄成……」之後，大家的反應會是什麼。"
+        ],
+        mate: { shape: "星環連結系魔法使", emoji: "🌐" },
+        clash: { shape: "演算解析系魔法使", emoji: "🧮" },
+        tips: "你的場域魔法在<b>多媒體設計科</b>（展場設計、互動體驗）、<b>商業經營科</b>（門市氛圍、品牌體驗）都會非常搶手；如果結合活動企劃與社群營運，你會成為很會「辦場子」的人。"
+      },
+      oracle: {
+        emoji: "🔮",
+        name: "未來預讀系魔法使",
+        tag: "趨勢 · 風向 · 長線感",
+        rarity: "R 進階魔法系",
+        rarityClass: "res-rarity-r",
+        rate: 9,
+        blessing: "",
+        quote: "你會不自覺地想：「如果照這樣走下去，之後會變成什麼樣子？」",
+        traits: [
+          "遇到選擇時，不只看眼前，而是會往後想一兩步。",
+          "對新聞、社會事件或產業變化有興趣，會想知道背後原因。",
+          "看到別人的經驗談時，會拿來默默對照自己的可能路線。"
+        ],
+        mate: { shape: "記錄方陣系魔法使", emoji: "📊" },
+        clash: { shape: "即興火花系魔法使", emoji: "🎭" },
+        tips: "你的預讀魔法在<b>商業經營科</b>與<b>國際貿易科</b>會是一大優勢：不論是市場趨勢、產業脈動或職涯路線，都需要有人幫忙看長遠一點；搭配資料與語文能力，未來也適合走企劃與策略相關工作。"
+      },
+      anchor: {
+        emoji: "⚓",
+        name: "基底支援系魔法使",
+        tag: "後勤 · 穩定 · 承接力",
+        rarity: "N 基礎魔法系",
+        rarityClass: "res-rarity-n",
+        rate: 18,
+        blessing: "",
+        quote: "你不一定站在舞台中央，但沒有你，很多事會悄悄運轉不起來。",
+        traits: [
+          "會主動注意誰的進度落後、誰需要提醒或協助。",
+          "比起當主角，你更在意整個團隊有沒有順利完成任務。",
+          "別人常常一句「拜託你一下」，你就默默幫忙收好爛攤子。"
+        ],
+        mate: { shape: "記錄方陣系魔法使", emoji: "📊" },
+        clash: { shape: "即興火花系魔法使", emoji: "🎭" },
+        tips: "你的支援魔法在<b>會計事務科</b>與<b>資料處理科</b>非常實用，讓系統、帳務與資料不會亂掉；在<b>商業經營科</b>裡，你也會是專案和行政流程背後非常重要的核心。"
+      },
+      abyss: {
+        emoji: "🌊",
+        name: "靜默深潛系魔法使",
+        tag: "安靜 · 深度 · 慢熟",
+        rarity: "SSR 超稀有魔法系",
+        rarityClass: "res-rarity-ssr",
+        rate: 7,
+        blessing: "你不一定會想站在聚光燈下，但很多真正重要的長線工作，都需要像你這樣願意「一個人慢慢往下潛」的人。請給自己一點時間，你走得可能比自己想像中還要遠。",
+        quote: "你可能話不多，但一旦想做，就會慢慢往深處潛下去。",
+        traits: [
+          "不太喜歡被催促，比起表現得很厲害，更想穩穩來。",
+          "對有興趣的東西可以一直重複做，不太怕覺得無聊。",
+          "有些計畫你放在心裡想，還沒準備好時不太會講出來。"
+        ],
+        mate: { shape: "演算解析系魔法使", emoji: "🧮" },
+        clash: { shape: "星環連結系魔法使", emoji: "🌐" },
+        tips: "你的深潛魔法很適合需要長期打磨的領域，例如<b>會計事務科</b>、<b>資料處理科／AI 實驗班</b>；在花商，你可以慢慢累積，一點一滴疊出自己的專業，不用跟別人的時間表完全一樣。"
+      }
+    };
+
+    const state = {
+      step: 0,
+      answers: {},
+      total: 12,
+      lastResultKey: null
+    };
+
+    const els = {
+      hero: document.getElementById('heroCard'),
+      quiz: document.getElementById('quizCard'),
+      result: document.getElementById('resultArea'),
+      startBtn: document.getElementById('startBtn'),
+      prevBtn: document.getElementById('prevBtn'),
+      nextBtn: document.getElementById('nextBtn'),
+      questions: document.querySelectorAll('.question-card'),
+      stepText: document.getElementById('stepText'),
+      progressFill: document.getElementById('progressFill'),
+      toast: document.getElementById('toast'),
+      footer: document.getElementById('mainFooter'),
+      screenshotHint: document.getElementById('screenshotHint')
+    };
+
+    // 卡池稀有度風味文字：讓結果更有抽卡感
+    const rarityFlavorMap = {
+      N:  "常駐基礎卡，是大家日常生活裡的底色魔法。",
+      R:  "進階成長卡，比常駐再稀有一點，代表你在這條路上已經有加點天賦。",
+      SR: "稀有升級卡，一個班通常只會有少數幾位這種屬性。",
+      SSR:"傳說彩蛋卡，抽到可以光明正大跟同學炫耀那種。"
+    };
+
+    function startQuiz() {
+      els.hero.style.display = 'none';
+      els.quiz.style.display = 'block';
+      updateUI();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // 綁定開始按鈕
+    if (els.startBtn) {
+      els.startBtn.addEventListener('click', startQuiz);
+    }
+
+    const showToast = (msg) => {
+      els.toast.textContent = msg;
+      els.toast.classList.add('show');
+      setTimeout(() => els.toast.classList.remove('show'), 2000);
+    };
+
+    const updateUI = () => {
+      els.questions.forEach((q, idx) => {
+        if (idx === state.step) q.classList.add('active');
+        else q.classList.remove('active');
+      });
+
+      const progress = ((state.step + 1) / state.total) * 100;
+      els.progressFill.style.width = `${progress}%`;
+      els.stepText.textContent = `${state.step + 1} / ${state.total}`;
+
+      els.prevBtn.style.display = state.step === 0 ? 'none' : 'block';
+      els.nextBtn.innerHTML = state.step === state.total - 1 ? '看結果 🔮' : '下一題';
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const calculateResult = () => {
+      const scores = {
+        aurora: 0, ledger: 0, cipher: 0, scribe: 0,
+        nexus: 0, carnival: 0, solace: 0, horizon: 0,
+        atelier: 0, oracle: 0, anchor: 0, abyss: 0
+      };
+
+      Object.values(state.answers).forEach(val => {
+        if (scores[val] !== undefined) scores[val]++;
+      });
+
+      let max = -1;
+      let winner = 'abyss';
+      Object.entries(scores).forEach(([key, score]) => {
+        if (score > max) {
+          max = score;
+          winner = key;
+        }
+      });
+
+      renderResult(winner);
+    };
+
+    const renderResult = (key) => {
+      const data = resultsData[key];
+      state.lastResultKey = key;
+
+      // 從「SSR 超稀有魔法系」裡抽出稀有度縮寫（SSR / SR / R / N）
+      let rarityShort = null;
+      if (data.rarity) {
+        rarityShort = data.rarity.split(' ')[0];
+      }
+      const flavor = rarityShort && rarityFlavorMap[rarityShort]
+        ? rarityFlavorMap[rarityShort]
+        : "";
+
+      const rarityText = data.rarity
+        ? `${data.rarity} ｜ 卡池體感出現率約 ${data.rate}% ｜ ${flavor}`
+        : "";
+
+      const html = `
+        <div class="result-header">
+          <div class="res-orbit">
+            <div class="res-orbit-ring"></div>
+            <div class="res-emoji">${data.emoji}</div>
+          </div>
+          <h2 class="res-title">${data.name}</h2>
+          <div style="display:flex; flex-direction:column; align-items:center; gap:6px; position:relative; z-index:2;">
+            <span class="res-tag">${data.tag}</span>
+            ${data.rarity ? `<span class="res-rarity ${data.rarityClass}">${rarityText}</span>` : ""}
+          </div>
+        </div>
+        <div class="result-body">
+          <div class="result-body-inner">
+            <p class="res-quote">${data.quote}</p>
+
+            <div class="trait-box">
+              <div class="trait-title">YOUR MAGIC TRAITS</div>
+              <ul class="trait-list">
+                ${data.traits.map(t => `<li>${t}</li>`).join('')}
+              </ul>
+            </div>
+
+            <div class="relation-grid">
+              <div class="relation-card good">
+                <span class="rel-icon">😍</span>
+                <span class="rel-label">最合拍</span>
+                <div class="rel-name">${data.mate.emoji} ${data.mate.shape}</div>
+              </div>
+              <div class="relation-card bad">
+                <span class="rel-icon">🤯</span>
+                <span class="rel-label">容易磨合出火花</span>
+                <div class="rel-name">${data.clash.emoji} ${data.clash.shape}</div>
+              </div>
+            </div>
+
+            ${data.blessing ? `
+            <div class="blessing-box">
+              <div class="blessing-title">🎁 稀有彩蛋祝福</div>
+              <div class="blessing-text">${data.blessing}</div>
+            </div>` : ""}
+
+            <!-- 花商說明區：一般模式顯示，截圖模式自動隱藏 -->
+            <div class="school-tips hide-on-shot">
+              <div class="tips-title">💡 在花商，這種魔法可以怎麼練？</div>
+              <div class="tips-text">${data.tips}</div>
+            </div>
+
+            <!-- 操作按鈕：一般模式顯示，截圖模式自動隱藏 -->
+            <div class="result-actions hide-on-shot">
+              <button onclick="toggleScreenshotMode()" class="btn-secondary">
+                ✨ 截圖分享模式
+              </button>
+
+              <button onclick="downloadJpg()" class="btn-secondary">
+                📥 下載 JPG 分享圖
+              </button>
+
+              <div style="text-align:center; font-size:0.8rem; color:#9ca3af; margin:10px 0 5px;">
+                想再看看現實世界的說明書？
+              </div>
+
+              <div class="link-group">
+                <a href="https://www.hlbh.hlc.edu.tw/ischool/publish_page/0/" target="_blank" class="btn-link">
+                  🏫 花蓮高商官網
+                </a>
+                <a href="https://www.facebook.com/hlbhtw" target="_blank" class="btn-link fb">
+                  👍 花商粉專
+                </a>
+              </div>
+
+              <button onclick="location.reload()" class="btn-secondary" style="margin-top:10px; border-color:rgba(148,163,184,0.7); background:rgba(15,23,42,0.96); color:#e5e7eb;">
+                ↻ 想換一個魔法系再試一次
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+
+      els.quiz.style.display = 'none';
+      els.result.innerHTML = html;
+      els.result.style.display = 'block';
+      els.result.style.animation = 'fadeIn 0.6s ease-out';
+
+      els.hero.style.display = 'none';
+      els.footer.style.display = 'block';
+      els.screenshotHint.style.display = 'block';
+    };
+
+    // 截圖模式：只保留圖鑑卡片，隱藏招生資訊與按鈕
+    window.toggleScreenshotMode = () => {
+      document.body.classList.toggle('screenshot-mode');
+      if (document.body.classList.contains('screenshot-mode')) {
+        showToast('已切換為截圖模式，花商資訊與按鈕都幫你藏好了 📸');
+      } else {
+        showToast('已回到一般模式，可以繼續閱讀花商的說明 ✨');
+      }
+    };
+
+    // 下一題 / 上一題
+    els.nextBtn.addEventListener('click', () => {
+      const currentQ = document.querySelector(\`.question-card[data-q="\${state.step + 1}"]\`);
+      const checked = currentQ.querySelector('input:checked');
+
+      if (!checked) {
+        showToast('選一個啦，別想偷懶！👻');
+        return;
+      }
+
+      state.answers[\`q\${state.step + 1}\`] = checked.value;
+
+      if (state.step < state.total - 1) {
+        state.step++;
+        updateUI();
+      } else {
+        calculateResult();
+      }
+    });
+
+    els.prevBtn.addEventListener('click', () => {
+      if (state.step > 0) {
+        state.step--;
+        updateUI();
+      }
+    });
+
+    // 下載 JPG 分享圖：自動套用截圖模式，只截 resultArea 卡片
+    window.downloadJpg = () => {
+      const result = document.getElementById('resultArea');
+      const alreadyShot = document.body.classList.contains('screenshot-mode');
+
+      if (!alreadyShot) {
+        document.body.classList.add('screenshot-mode');
+      }
+
+      html2canvas(result, {
+        backgroundColor: "#ffffff",
+        scale: 2,
+        useCORS: true
+      }).then(canvas => {
+        const link = document.createElement('a');
+        link.download = 'hlbh-magic.jpg';
+        link.href = canvas.toDataURL("image/jpeg", 0.92);
+        link.click();
+      }).finally(() => {
+        if (!alreadyShot) {
+          document.body.classList.remove('screenshot-mode');
+        }
+      });
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</body>
+</html>
