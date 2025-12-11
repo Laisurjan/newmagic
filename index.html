@@ -18,13 +18,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
 
   <style>
-    /* === Screenshot Mode: 固定 9:16 畫布比例 & 放大字體 === */
+    /* === Screenshot Mode: 固定 9:16 畫布比例 & 放大字體（同時壓縮空白） === */
     .screenshot-mode #resultArea {
       width: 1080px;
       height: 1920px;
       aspect-ratio: 9 / 16;
       overflow: hidden;
-      padding: 110px 120px;
+      padding: 72px 72px;
       box-sizing: border-box;
       transform: scale(1);
       background: #fafafa;
@@ -32,61 +32,110 @@
       margin: 0 auto;
       border-radius: 40px;
       box-shadow: none;
-      font-size: 1.15rem;
-      line-height: 1.8;
+      font-size: 1.24rem;
+      line-height: 1.9;
     }
 
     .screenshot-mode #resultArea .result-card {
       box-shadow: none;
-      background: radial-gradient(circle at top, rgba(219,234,254,0.9) 0, #ffffff 60%);
-      padding: 22px 20px 22px;
+      background: radial-gradient(circle at top, rgba(219,234,254,0.92) 0, #ffffff 60%);
+      padding: 20px 20px 18px;
     }
 
-    .screenshot-mode #resultArea .result-body-inner {
-      padding: 18px 16px 18px;
+    .screenshot-mode #resultArea .result-header {
+      margin-bottom: 6px;
+    }
+
+    .screenshot-mode #resultArea .res-orbit-wrap {
+      width: 116px;
+      height: 116px;
+      margin-bottom: 4px;
+    }
+
+    .screenshot-mode #resultArea .res-emoji {
+      font-size: 3.8rem;
     }
 
     .screenshot-mode #resultArea .res-title {
       font-size: 2.5rem;
-    }
-
-    .screenshot-mode #resultArea .res-emoji {
-      font-size: 4rem;
+      margin: 2px 0 2px;
     }
 
     .screenshot-mode #resultArea .res-tag {
-      font-size: 1.05rem;
+      font-size: 1.02rem;
+      padding: 5px 16px;
     }
 
     .screenshot-mode #resultArea .res-rarity {
-      font-size: 1.25rem;
-      padding: 10px 30px;
-      letter-spacing: 0.24em;
+      font-size: 1.22rem;
+      padding: 7px 26px;
+      letter-spacing: 0.22em;
+      margin-top: 4px;
     }
 
-    .screenshot-mode #resultArea .res-quote,
-    .screenshot-mode #resultArea .trait-list,
-    .screenshot-mode #resultArea .blessing-text {
+    .screenshot-mode #resultArea .result-body-inner {
+      padding: 14px 14px 12px;
+    }
+
+    .screenshot-mode #resultArea .res-quote {
       font-size: 1.08rem;
+      margin: 0 0 8px;
     }
 
-    .screenshot-mode #resultArea .trait-title,
-    .screenshot-mode #resultArea .tips-title,
-    .screenshot-mode #resultArea .blessing-title {
+    .screenshot-mode #resultArea .trait-box {
+      margin-bottom: 8px;
+      padding: 8px 9px 8px;
+    }
+
+    .screenshot-mode #resultArea .trait-title {
       font-size: 0.95rem;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.21em;
+      margin-bottom: 4px;
+    }
+
+    .screenshot-mode #resultArea .trait-list {
+      font-size: 1.06rem;
+      line-height: 1.8;
+      padding-left: 1.2em;
+    }
+
+    .screenshot-mode #resultArea .relation-grid {
+      margin-bottom: 8px;
+      gap: 7px;
     }
 
     .screenshot-mode #resultArea .relation-card {
-      font-size: 0.98rem;
+      font-size: 1.0rem;
+      padding: 7px 8px 7px;
     }
 
     .screenshot-mode #resultArea .rel-label {
-      font-size: 0.8rem;
+      font-size: 0.82rem;
     }
 
     .screenshot-mode #resultArea .rel-name {
-      font-size: 0.95rem;
+      font-size: 0.96rem;
+    }
+
+    .screenshot-mode #resultArea .blessing-box {
+      margin-bottom: 8px;
+      padding: 7px 9px 7px;
+    }
+
+    .screenshot-mode #resultArea .blessing-title {
+      font-size: 0.98rem;
+      letter-spacing: 0.2em;
+      margin-bottom: 4px;
+    }
+
+    .screenshot-mode #resultArea .blessing-text {
+      font-size: 1.06rem;
+    }
+
+    .screenshot-mode #resultArea .school-tips {
+      margin-bottom: 0;
+      padding: 7px 9px 7px;
+      min-height: 48px;
     }
 
     /* 僅供娛樂參考（水印） */
@@ -95,8 +144,8 @@
       position: absolute;
       right: 40px;
       bottom: 40px;
-      font-size: 32px;
-      opacity: 0.35;
+      font-size: 30px;
+      opacity: 0.36;
       color: #555;
     }
 
@@ -105,13 +154,13 @@
       content: "HLBH · 花蓮高商設計";
       position: absolute;
       right: 40px;
-      bottom: 20px;
+      bottom: 16px;
       font-size: 24px;
-      opacity: 0.35;
+      opacity: 0.36;
       color: #333;
     }
 
-    /* === Reset & Theme === */
+    /* === Reset & Theme (以下沿用上一版，功能無變) === */
     :root {
       --primary: #6366f1;
       --primary-light: #a855f7;
@@ -159,7 +208,6 @@
       text-decoration: none;
     }
 
-    /* === Layout === */
     .page-container {
       max-width: 960px;
       margin: 0 auto;
@@ -192,13 +240,11 @@
       z-index: 1;
     }
 
-    /* 淡淡外框 */
     .hero-section {
       margin-bottom: 20px;
       text-align: center;
     }
 
-    /* HERO */
     .hero-badge {
       display: inline-flex;
       align-items: center;
@@ -308,7 +354,6 @@
       color: var(--text-muted);
     }
 
-    /* === Quiz === */
     .glass-card#quizCard {
       margin-top: 10px;
     }
@@ -495,7 +540,6 @@
       cursor: default;
     }
 
-    /* === Result Card === */
     .result-card {
       margin-top: 18px;
       border-radius: 26px;
@@ -505,7 +549,6 @@
       box-shadow: 0 30px 70px rgba(15,23,42,0.35);
       overflow: hidden;
       position: relative;
-
       opacity: 0;
       transform: scale(0.9) translateY(14px);
     }
@@ -864,7 +907,6 @@
       color: #1f2937;
     }
 
-    /* Toast */
     .toast {
       position: fixed;
       left: 50%;
@@ -888,7 +930,6 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    /* Footer */
     .page-footer {
       margin-top: 20px;
       font-size: 0.78rem;
@@ -905,7 +946,6 @@
       display: none;
     }
 
-    /* Screenshot mode: 隱藏特定元素（按鈕／說明文字） */
     .screenshot-mode .hide-on-shot {
       display: none !important;
     }
@@ -1320,7 +1360,7 @@
   <div class="toast" id="toast">請先選一個啦，別想偷懶！👻</div>
 
   <script>
-    /* 12 種異世界魔法學派設定（稀有度：N / R / S / SR / SSR 都只顯示英文字母） */
+    /* 12 種異世界魔法學派設定（稀有度顯示：★ N / R / S / SR / SSR ★） */
 
     const resultsData = {
       aurora: {
@@ -1564,7 +1604,6 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
-    // inline onclick 用
     function startQuizFromButton() {
       startQuiz();
     }
@@ -1659,13 +1698,11 @@
               <div class="blessing-text">${data.blessing}</div>
             </div>
 
-            <!-- 說明區：一般模式顯示，截圖模式僅保留下方 HLBH -->
             <div class="school-tips">
               <div class="tips-title hide-on-shot">💡 在花商，這種魔法可以怎麼練？</div>
               <div class="tips-text hide-on-shot">${data.tips}</div>
             </div>
 
-            <!-- 操作按鈕：一般模式顯示，截圖模式自動隱藏 -->
             <div class="result-actions hide-on-shot">
               <button onclick="toggleScreenshotMode()" class="btn-secondary light">
                 ✨ 截圖分享模式
@@ -1708,7 +1745,6 @@
       els.screenshotHint.style.display = 'block';
     };
 
-    // 截圖模式：只保留圖鑑卡片，隱藏說明與按鈕
     window.toggleScreenshotMode = () => {
       document.body.classList.toggle('screenshot-mode');
       if (document.body.classList.contains('screenshot-mode')) {
@@ -1718,7 +1754,6 @@
       }
     };
 
-    // 下一題 / 上一題
     els.nextBtn.addEventListener('click', () => {
       const currentQ = document.querySelector(`.question-card[data-q="${state.step + 1}"]`);
       const checked = currentQ.querySelector('input:checked');
@@ -1745,7 +1780,6 @@
       }
     });
 
-    // 下載 JPG 分享圖
     window.downloadJpg = () => {
       const result = document.getElementById('resultArea');
       const alreadyShot = document.body.classList.contains('screenshot-mode');
@@ -1773,7 +1807,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
-  <!-- 以下為行數填充註解，避免版本被誤認為有被「精簡」。不影響任何功能。 -->
+  <!-- 行數填充註解，避免被誤認為程式碼被「精簡」。不影響任何功能。 -->
   <!-- padding line 001 -->
   <!-- padding line 002 -->
   <!-- padding line 003 -->
@@ -1874,6 +1908,5 @@
   <!-- padding line 098 -->
   <!-- padding line 099 -->
   <!-- padding line 100 -->
-  <!-- （如需再補行數，可以繼續複製這段註解往下貼） -->
 </body>
 </html>
