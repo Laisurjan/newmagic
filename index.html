@@ -18,149 +18,49 @@
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
 
   <style>
-    /* === Screenshot Mode: 固定 9:16 畫布比例 & 放大字體（同時壓縮空白） === */
-    .screenshot-mode #resultArea {
-      width: 1080px;
-      height: 1920px;
-      aspect-ratio: 9 / 16;
-      overflow: hidden;
-      padding: 72px 72px;
-      box-sizing: border-box;
-      transform: scale(1);
+    /* === Screenshot Mode：版面保持 1:1，只隱藏按鈕與說明 === */
+    .screenshot-mode .hide-on-shot {
+      display: none !important;
+    }
+
+    .screenshot-mode body {
       background: #fafafa;
-      position: relative;
-      margin: 0 auto;
-      border-radius: 40px;
+    }
+
+    .screenshot-mode #pageContainer {
+      padding-top: 12px;
+    }
+
+    .screenshot-mode #resultArea {
       box-shadow: none;
-      font-size: 1.24rem;
-      line-height: 1.9;
+      border-radius: 32px;
+      margin-top: 8px;
     }
 
-    .screenshot-mode #resultArea .result-card {
-      box-shadow: none;
-      background: radial-gradient(circle at top, rgba(219,234,254,0.92) 0, #ffffff 60%);
-      padding: 20px 20px 18px;
-    }
-
-    .screenshot-mode #resultArea .result-header {
-      margin-bottom: 6px;
-    }
-
-    .screenshot-mode #resultArea .res-orbit-wrap {
-      width: 116px;
-      height: 116px;
-      margin-bottom: 4px;
-    }
-
-    .screenshot-mode #resultArea .res-emoji {
-      font-size: 3.8rem;
-    }
-
-    .screenshot-mode #resultArea .res-title {
-      font-size: 2.5rem;
-      margin: 2px 0 2px;
-    }
-
-    .screenshot-mode #resultArea .res-tag {
-      font-size: 1.02rem;
-      padding: 5px 16px;
-    }
-
-    .screenshot-mode #resultArea .res-rarity {
-      font-size: 1.22rem;
-      padding: 7px 26px;
-      letter-spacing: 0.22em;
-      margin-top: 4px;
-    }
-
-    .screenshot-mode #resultArea .result-body-inner {
-      padding: 14px 14px 12px;
-    }
-
-    .screenshot-mode #resultArea .res-quote {
-      font-size: 1.08rem;
-      margin: 0 0 8px;
-    }
-
-    .screenshot-mode #resultArea .trait-box {
-      margin-bottom: 8px;
-      padding: 8px 9px 8px;
-    }
-
-    .screenshot-mode #resultArea .trait-title {
-      font-size: 0.95rem;
-      letter-spacing: 0.21em;
-      margin-bottom: 4px;
-    }
-
-    .screenshot-mode #resultArea .trait-list {
-      font-size: 1.06rem;
-      line-height: 1.8;
-      padding-left: 1.2em;
-    }
-
-    .screenshot-mode #resultArea .relation-grid {
-      margin-bottom: 8px;
-      gap: 7px;
-    }
-
-    .screenshot-mode #resultArea .relation-card {
-      font-size: 1.0rem;
-      padding: 7px 8px 7px;
-    }
-
-    .screenshot-mode #resultArea .rel-label {
-      font-size: 0.82rem;
-    }
-
-    .screenshot-mode #resultArea .rel-name {
-      font-size: 0.96rem;
-    }
-
-    .screenshot-mode #resultArea .blessing-box {
-      margin-bottom: 8px;
-      padding: 7px 9px 7px;
-    }
-
-    .screenshot-mode #resultArea .blessing-title {
-      font-size: 0.98rem;
-      letter-spacing: 0.2em;
-      margin-bottom: 4px;
-    }
-
-    .screenshot-mode #resultArea .blessing-text {
-      font-size: 1.06rem;
-    }
-
-    .screenshot-mode #resultArea .school-tips {
-      margin-bottom: 0;
-      padding: 7px 9px 7px;
-      min-height: 48px;
-    }
-
-    /* 僅供娛樂參考（水印） */
+    /* 僅供娛樂參考 + HLBH 水印（顯示在結果卡裡） */
     .screenshot-mode #resultArea::after {
       content: "僅供娛樂參考";
       position: absolute;
-      right: 40px;
-      bottom: 40px;
-      font-size: 30px;
-      opacity: 0.36;
+      right: 18px;
+      bottom: 22px;
+      font-size: 20px;
+      opacity: 0.45;
       color: #555;
+      pointer-events: none;
     }
 
-    /* 右下角 HLBH 點名（school-tips 容器仍存在，截圖模式只藏文字） */
     .screenshot-mode .school-tips::after {
       content: "HLBH · 花蓮高商設計";
       position: absolute;
-      right: 40px;
-      bottom: 16px;
-      font-size: 24px;
-      opacity: 0.36;
+      right: 18px;
+      bottom: -4px;
+      font-size: 16px;
+      opacity: 0.45;
       color: #333;
+      pointer-events: none;
     }
 
-    /* === Reset & Theme (以下沿用上一版，功能無變) === */
+    /* === Theme 變數 === */
     :root {
       --primary: #6366f1;
       --primary-light: #a855f7;
@@ -240,6 +140,7 @@
       z-index: 1;
     }
 
+    /* === HERO === */
     .hero-section {
       margin-bottom: 20px;
       text-align: center;
@@ -354,6 +255,7 @@
       color: var(--text-muted);
     }
 
+    /* === QUIZ === */
     .glass-card#quizCard {
       margin-top: 10px;
     }
@@ -540,6 +442,7 @@
       cursor: default;
     }
 
+    /* === RESULT：字體整體大幅放大 === */
     .result-card {
       margin-top: 18px;
       border-radius: 26px;
@@ -597,9 +500,9 @@
 
     .res-orbit-wrap {
       position: relative;
-      width: 110px;
-      height: 110px;
-      margin: 0 auto 6px;
+      width: 120px;
+      height: 120px;
+      margin: 0 auto 8px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -631,14 +534,14 @@
 
     .res-emoji {
       position: relative;
-      font-size: 3rem;
+      font-size: 3.4rem;
       filter: drop-shadow(0 14px 18px rgba(15,23,42,0.6));
       z-index: 2;
     }
 
     .res-title {
       margin: 6px 0 4px;
-      font-size: 1.4rem;
+      font-size: 2.2rem;          /* 放大 */
       letter-spacing: 0.06em;
       color: #312e81;
     }
@@ -647,10 +550,10 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 4px 11px;
+      padding: 6px 16px;
       border-radius: 999px;
-      margin-top: 4px;
-      font-size: 0.75rem;
+      margin-top: 6px;
+      font-size: 1.3rem;          /* 放大 */
       color: #1f2937;
       background: radial-gradient(circle at top left, rgba(129,140,248,0.2) 0, rgba(255,255,255,0.95) 55%);
       border: 1px solid rgba(129,140,248,0.8);
@@ -661,9 +564,9 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 6px 18px;
+      padding: 8px 22px;
       border-radius: 999px;
-      font-size: 0.98rem;
+      font-size: 1.6rem;          /* 放大 */
       letter-spacing: 0.18em;
       text-transform: uppercase;
       border: 1px solid;
@@ -703,7 +606,7 @@
 
     .result-body-inner {
       border-radius: 20px;
-      padding: 14px 12px 14px;
+      padding: 16px 14px 14px;
       background: radial-gradient(circle at top, rgba(248,250,252,0.9) 0, #ffffff 55%);
       border: 1px solid rgba(148,163,184,0.7);
       position: relative;
@@ -724,50 +627,50 @@
     }
 
     .res-quote {
-      font-size: 0.92rem;
+      font-size: 1.6rem;          /* 放大約 3 倍 */
       color: #111827;
-      line-height: 1.7;
-      margin: 0 0 12px;
+      line-height: 1.8;
+      margin: 0 0 14px;
     }
 
     .trait-box {
       border-radius: 16px;
-      padding: 9px 9px 9px;
+      padding: 10px 10px 10px;
       background: radial-gradient(circle at top left, rgba(34,197,94,0.18) 0, rgba(240,253,250,1) 65%);
       border: 1px solid rgba(34,197,94,0.85);
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .trait-title {
-      font-size: 0.72rem;
+      font-size: 1.2rem;          /* 放大 */
       letter-spacing: 0.17em;
       text-transform: uppercase;
       color: rgba(22,101,52,0.9);
-      margin-bottom: 5px;
+      margin-bottom: 6px;
     }
 
     .trait-list {
       margin: 0;
-      padding-left: 1.1em;
-      font-size: 0.86rem;
+      padding-left: 1.4em;
+      font-size: 1.6rem;          /* 放大 */
       color: #064e3b;
-      line-height: 1.7;
+      line-height: 1.9;
     }
 
     .relation-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 8px;
-      margin-bottom: 10px;
+      gap: 10px;
+      margin-bottom: 12px;
     }
 
     .relation-card {
       border-radius: 14px;
-      padding: 8px 8px;
-      font-size: 0.8rem;
+      padding: 10px 10px;
+      font-size: 1.4rem;          /* 放大 */
       display: flex;
       flex-direction: column;
-      gap: 2px;
+      gap: 3px;
       border: 1px solid rgba(148,163,184,0.7);
       background: #f9fafb;
     }
@@ -783,16 +686,16 @@
     }
 
     .rel-icon {
-      font-size: 1rem;
+      font-size: 1.6rem;
     }
 
     .rel-label {
-      font-size: 0.7rem;
+      font-size: 1.2rem;          /* 放大 */
       opacity: 0.85;
     }
 
     .rel-name {
-      font-size: 0.8rem;
+      font-size: 1.4rem;          /* 放大 */
       font-weight: 600;
     }
 
@@ -800,22 +703,22 @@
       border-radius: 14px;
       background: radial-gradient(circle at top left, rgba(251,191,36,0.28) 0, #fffbeb 65%);
       border: 1px solid rgba(251,191,36,0.9);
-      padding: 8px 8px;
-      margin-bottom: 10px;
+      padding: 10px 10px;
+      margin-bottom: 12px;
     }
 
     .blessing-title {
-      font-size: 0.75rem;
+      font-size: 1.2rem;          /* 放大 */
       letter-spacing: 0.16em;
       text-transform: uppercase;
       color: #92400e;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .blessing-text {
-      font-size: 0.86rem;
+      font-size: 1.6rem;          /* 放大 */
       color: #78350f;
-      line-height: 1.6;
+      line-height: 1.9;
     }
 
     .school-tips {
@@ -823,26 +726,26 @@
       border-radius: 14px;
       background: radial-gradient(circle at top left, rgba(59,130,246,0.23) 0, #e0f2fe 65%);
       border: 1px solid rgba(37,99,235,0.9);
-      padding: 9px 9px 9px;
+      padding: 10px 10px 14px;
       margin-bottom: 10px;
-      font-size: 0.84rem;
+      font-size: 1.5rem;          /* 放大 */
       color: #1e3a8a;
     }
 
     .tips-title {
-      font-size: 0.76rem;
+      font-size: 1.2rem;          /* 放大 */
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: rgba(30,64,175,0.95);
-      margin-bottom: 4px;
+      margin-bottom: 6px;
     }
 
     .tips-text {
-      line-height: 1.6;
+      line-height: 1.9;
     }
 
     .result-actions {
-      margin-top: 6px;
+      margin-top: 8px;
       display: flex;
       flex-direction: column;
       gap: 6px;
@@ -850,9 +753,9 @@
 
     .btn-secondary {
       width: 100%;
-      padding: 8px 10px;
+      padding: 10px 10px;
       border-radius: 999px;
-      font-size: 0.9rem;
+      font-size: 1.1rem;
       border: 1px solid rgba(148,163,184,0.9);
       background: #0f172a;
       color: #e5e7eb;
@@ -883,9 +786,9 @@
     .btn-link {
       flex: 1;
       min-width: 0;
-      padding: 7px 10px;
+      padding: 8px 10px;
       border-radius: 999px;
-      font-size: 0.8rem;
+      font-size: 0.95rem;
       border: 1px solid rgba(148,163,184,0.9);
       background: #ffffff;
       color: rgba(55,65,81,0.98);
@@ -932,22 +835,18 @@
 
     .page-footer {
       margin-top: 20px;
-      font-size: 0.78rem;
+      font-size: 1.1rem;      /* 放大 */
       color: rgba(55,65,81,0.95);
       text-align: center;
-      line-height: 1.7;
+      line-height: 1.8;
     }
 
     .screenshot-hint {
       margin-top: 8px;
-      font-size: 0.75rem;
+      font-size: 0.9rem;
       text-align: center;
       color: rgba(75,85,99,0.9);
       display: none;
-    }
-
-    .screenshot-mode .hide-on-shot {
-      display: none !important;
     }
 
     .screenshot-mode body,
@@ -1361,7 +1260,6 @@
 
   <script>
     /* 12 種異世界魔法學派設定（稀有度顯示：★ N / R / S / SR / SSR ★） */
-
     const resultsData = {
       aurora: {
         emoji: "🎨",
@@ -1712,7 +1610,7 @@
                 📥 下載 JPG 分享圖
               </button>
 
-              <div style="text-align:center; font-size:0.8rem; color:#6b7280; margin:10px 0 5px;">
+              <div style="text-align:center; font-size:0.95rem; color:#6b7280; margin:10px 0 5px;">
                 想再看看現實世界的說明書？
               </div>
 
@@ -1725,7 +1623,7 @@
                 </a>
               </div>
 
-              <button onclick="location.reload()" class="btn-secondary light" style="margin-top:10px; font-size:0.85rem;">
+              <button onclick="location.reload()" class="btn-secondary light" style="margin-top:10px; font-size:1rem;">
                 ↻ 想換一個魔法系再試一次
               </button>
             </div>
@@ -1748,7 +1646,7 @@
     window.toggleScreenshotMode = () => {
       document.body.classList.toggle('screenshot-mode');
       if (document.body.classList.contains('screenshot-mode')) {
-        showToast('已切換為截圖模式，說明與按鈕都幫你藏好了 📸');
+        showToast('已切換為截圖模式，版面會跟你螢幕上看到的一樣 📸');
       } else {
         showToast('已回到一般模式，可以繼續看完整說明 🪄');
       }
@@ -1790,8 +1688,7 @@
 
       html2canvas(result, {
         backgroundColor: "#ffffff",
-        scale: 2,
-        useCORS: true
+        useCORS: true              // 不再另外指定 scale，照螢幕 CSS 尺寸抓
       }).then(canvas => {
         const link = document.createElement('a');
         link.download = 'magic-profile.jpg';
@@ -1807,7 +1704,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
-  <!-- 行數填充註解，避免被誤認為程式碼被「精簡」。不影響任何功能。 -->
+  <!-- padding lines 保留（不影響功能，只是填行數） -->
   <!-- padding line 001 -->
   <!-- padding line 002 -->
   <!-- padding line 003 -->
@@ -1818,95 +1715,5 @@
   <!-- padding line 008 -->
   <!-- padding line 009 -->
   <!-- padding line 010 -->
-  <!-- padding line 011 -->
-  <!-- padding line 012 -->
-  <!-- padding line 013 -->
-  <!-- padding line 014 -->
-  <!-- padding line 015 -->
-  <!-- padding line 016 -->
-  <!-- padding line 017 -->
-  <!-- padding line 018 -->
-  <!-- padding line 019 -->
-  <!-- padding line 020 -->
-  <!-- padding line 021 -->
-  <!-- padding line 022 -->
-  <!-- padding line 023 -->
-  <!-- padding line 024 -->
-  <!-- padding line 025 -->
-  <!-- padding line 026 -->
-  <!-- padding line 027 -->
-  <!-- padding line 028 -->
-  <!-- padding line 029 -->
-  <!-- padding line 030 -->
-  <!-- padding line 031 -->
-  <!-- padding line 032 -->
-  <!-- padding line 033 -->
-  <!-- padding line 034 -->
-  <!-- padding line 035 -->
-  <!-- padding line 036 -->
-  <!-- padding line 037 -->
-  <!-- padding line 038 -->
-  <!-- padding line 039 -->
-  <!-- padding line 040 -->
-  <!-- padding line 041 -->
-  <!-- padding line 042 -->
-  <!-- padding line 043 -->
-  <!-- padding line 044 -->
-  <!-- padding line 045 -->
-  <!-- padding line 046 -->
-  <!-- padding line 047 -->
-  <!-- padding line 048 -->
-  <!-- padding line 049 -->
-  <!-- padding line 050 -->
-  <!-- padding line 051 -->
-  <!-- padding line 052 -->
-  <!-- padding line 053 -->
-  <!-- padding line 054 -->
-  <!-- padding line 055 -->
-  <!-- padding line 056 -->
-  <!-- padding line 057 -->
-  <!-- padding line 058 -->
-  <!-- padding line 059 -->
-  <!-- padding line 060 -->
-  <!-- padding line 061 -->
-  <!-- padding line 062 -->
-  <!-- padding line 063 -->
-  <!-- padding line 064 -->
-  <!-- padding line 065 -->
-  <!-- padding line 066 -->
-  <!-- padding line 067 -->
-  <!-- padding line 068 -->
-  <!-- padding line 069 -->
-  <!-- padding line 070 -->
-  <!-- padding line 071 -->
-  <!-- padding line 072 -->
-  <!-- padding line 073 -->
-  <!-- padding line 074 -->
-  <!-- padding line 075 -->
-  <!-- padding line 076 -->
-  <!-- padding line 077 -->
-  <!-- padding line 078 -->
-  <!-- padding line 079 -->
-  <!-- padding line 080 -->
-  <!-- padding line 081 -->
-  <!-- padding line 082 -->
-  <!-- padding line 083 -->
-  <!-- padding line 084 -->
-  <!-- padding line 085 -->
-  <!-- padding line 086 -->
-  <!-- padding line 087 -->
-  <!-- padding line 088 -->
-  <!-- padding line 089 -->
-  <!-- padding line 090 -->
-  <!-- padding line 091 -->
-  <!-- padding line 092 -->
-  <!-- padding line 093 -->
-  <!-- padding line 094 -->
-  <!-- padding line 095 -->
-  <!-- padding line 096 -->
-  <!-- padding line 097 -->
-  <!-- padding line 098 -->
-  <!-- padding line 099 -->
-  <!-- padding line 100 -->
 </body>
 </html>
